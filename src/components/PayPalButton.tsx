@@ -21,8 +21,10 @@ export default function PayPalButton({ amount }: { amount: number }) {
       onApprove={async (data, actions) => {
         if (actions.order) {
           const details = await actions.order.capture();
-          alert(`Pagesa u krye me sukses nga ${details.payer.name?.given_name}!`);
-          window.location.reload(); // Rifresko faqen pas blerjes
+          // KETU U SHTUA PIKEPYETJA PAS payer
+          const name = details.payer?.name?.given_name || "Blerës";
+          alert(`Pagesa u krye me sukses nga ${name}!`);
+          window.location.reload(); 
         }
       }}
       onError={(err) => {
