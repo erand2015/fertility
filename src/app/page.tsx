@@ -2,28 +2,12 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { motion } from "framer-motion" // Biblioteka e efekteve
+import { motion } from "framer-motion"
 import { 
   Stethoscope, MessageCircle, ChevronRight, HeartPulse,
-  Microscope, Baby, MapPin, Clock, Phone, Star
+  Microscope, Baby, Star
 } from "lucide-react"
 import Link from "next/link"
-
-// Zëvendëso bllokun e vjetër me këtë:
-const fadeInUp = {
-  initial: { opacity: 0, y: 60 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { 
-    duration: 0.6, 
-    ease: [0.22, 1, 0.36, 1] // Kjo zëvendëson "easeOut" me kurbë matematike që TypeScript e kupton
-  }
-};
-const staggerContainer = {
-  initial: {},
-  whileInView: { transition: { staggerChildren: 0.2 } }
-};
 
 export default function KlinikaMeEfekte() {
   const WHATSAPP_NUMBER = "3556XXXXXXXX"; 
@@ -58,7 +42,7 @@ export default function KlinikaMeEfekte() {
         </div>
       </motion.nav>
 
-      {/* --- HERO SECTION ME EFEKT FLOAT --- */}
+      {/* --- HERO SECTION --- */}
       <section className="relative pt-32 pb-20 lg:pt-56 lg:pb-32 px-6">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           
@@ -69,7 +53,7 @@ export default function KlinikaMeEfekte() {
             className="space-y-8"
           >
             <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-black tracking-wide border border-blue-100">
-              <Star className="w-4 h-4 fill-blue-600" /> TEKNOLOGJIA E FUNDIT 2024
+              <Star className="w-4 h-4 fill-blue-600" /> TEKNOLOGJIA E FUNDIT 2026
             </div>
             <h2 className="text-6xl lg:text-8xl font-black tracking-tighter leading-[0.85]">
               Krijojmë <br />
@@ -89,7 +73,7 @@ export default function KlinikaMeEfekte() {
               
               <motion.button 
                 whileHover={{ scale: 1.05, borderColor: "#22c55e" }}
-                className="h-16 px-10 rounded-2xl border-2 border-slate-200 font-bold text-lg flex items-center gap-2"
+                className="h-16 px-10 rounded-2xl border-2 border-slate-200 font-bold text-lg flex items-center gap-2 transition-colors"
                 onClick={() => window.open(WHATSAPP_LINK, '_blank')}
               >
                 <MessageCircle className="text-green-500" /> WhatsApp
@@ -97,7 +81,6 @@ export default function KlinikaMeEfekte() {
             </div>
           </motion.div>
           
-          {/* FOTO ME EFEKT "LUNDRUES" */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -107,7 +90,7 @@ export default function KlinikaMeEfekte() {
             <motion.div 
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="relative z-10 rounded-[60px] overflow-hidden border-[16px] border-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.2)]"
+              className="relative z-10 rounded-[60px] overflow-hidden border-[16px] border-white shadow-2xl"
             >
               <img 
                 src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1000" 
@@ -123,11 +106,15 @@ export default function KlinikaMeEfekte() {
         </div>
       </section>
 
-      {/* --- SHERBIMET ME EFEKT "REVEAL" --- */}
+      {/* --- SHERBIMET --- */}
       <section className="py-32 px-6 bg-slate-50/50">
         <div className="max-w-7xl mx-auto">
+          {/* Rregullimi i gabimit te rreshti 129/130 */}
           <motion.div 
-            {...fadeInUp}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-6xl font-black tracking-tight mb-4">Ekselencë Mjekësore</h2>
@@ -135,10 +122,10 @@ export default function KlinikaMeEfekte() {
           </motion.div>
 
           <motion.div 
-            variants={staggerContainer}
             initial="initial"
             whileInView="whileInView"
             viewport={{ once: true }}
+            transition={{ staggerChildren: 0.2 }}
             className="grid md:grid-cols-3 gap-8"
           >
             {[
@@ -148,7 +135,9 @@ export default function KlinikaMeEfekte() {
             ].map((s, i) => (
               <motion.div 
                 key={i}
-                variants={fadeInUp}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 whileHover={{ y: -15 }}
                 className="bg-white p-10 rounded-[40px] shadow-sm border border-slate-100 hover:shadow-2xl transition-all"
               >
@@ -166,7 +155,7 @@ export default function KlinikaMeEfekte() {
         </div>
       </section>
 
-      {/* --- FLOATING WHATSAPP ME PULSIM --- */}
+      {/* --- FLOATING WHATSAPP --- */}
       <motion.div 
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
