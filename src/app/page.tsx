@@ -1,24 +1,31 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion"; // Shtuam Variants këtu
 import { Scale, ShieldCheck, Gavel, FileText, Phone, ChevronRight } from "lucide-react";
 import ShinyButton from "@/components/magicui/shiny-button";
 import InteractiveGridPattern from "@/components/magicui/interactive-grid";
 
-const gavelVariants = {
+// 1. ANIMACIONET E KORRIGJUARA PËR TYPESCRIPT
+const gavelVariants: Variants = {
   initial: { rotate: 0 },
   animate: { 
     rotate: [-25, 15, -20, 10, 0], 
-    transition: { duration: 0.6, ease: "easeOut" } 
+    transition: { 
+      duration: 0.6, 
+      ease: "easeOut" as const // Shtuam "as const"
+    } 
   }
 };
 
-const scaleVariants = {
+const scaleVariants: Variants = {
   initial: { rotate: 0 },
   animate: { 
     rotate: [-10, 10, -10, 10, 0], 
-    transition: { duration: 1.2, ease: "easeInOut" } 
+    transition: { 
+      duration: 1.2, 
+      ease: "easeInOut" as const // Shtuam "as const"
+    } 
   }
 };
 
@@ -45,10 +52,12 @@ export default function Page() {
                 <span className="text-[9px] tracking-[0.3em] uppercase opacity-40 font-bold mt-1">Studio Elitare</span>
               </div>
             </motion.div>
+
             <div className="hidden lg:flex items-center gap-10 text-[12px] font-bold uppercase tracking-widest text-white/50">
               <a href="#services" className="hover:text-white transition-all">Shërbimet</a>
               <a href="#contact" className="hover:text-white transition-all">Kontakt</a>
             </div>
+
             <button 
               onClick={() => window.location.href = CONTACT_LINK}
               className="bg-[#c5a059] text-black px-6 py-3 rounded-xl font-bold text-[11px] uppercase tracking-wider hover:bg-white transition-all shadow-lg"
@@ -59,17 +68,14 @@ export default function Page() {
         </div>
       </nav>
 
-      {/* --- HERO SECTION ME FOTO REALE --- */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        
-        {/* FOTO E SFONDIT */}
+      {/* --- HERO SECTION ME FOTO --- */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden text-left">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" 
             alt="Law and Justice" 
             className="w-full h-full object-cover opacity-30 grayscale-[50%] sepia-[20%]"
           />
-          {/* Maskimi i fotos që të mos pengojë tekstin */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#030303] via-[#030303]/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]" />
           <InteractiveGridPattern className="opacity-10" />
@@ -113,7 +119,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* --- SHËRBIMET --- */}
+      {/* --- SERVICES --- */}
       <section id="services" className="max-w-6xl mx-auto px-6 py-40 scroll-mt-32">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <motion.div whileHover={{ y: -10 }} className="bg-[#0b0b0c] p-12 rounded-[32px] border border-white/5 hover:border-[#c5a059]/20 transition-all">
@@ -127,7 +133,7 @@ export default function Page() {
               <Gavel className="w-12 h-12 mb-8" />
             </motion.div>
             <h3 className="text-2xl font-black mb-4 uppercase tracking-tighter text-left">Mbrojtje Penale</h3>
-            <p className="text-black/70 font-bold leading-relaxed text-left">Mbrojtje agresive në çdo fazë të procesit hetimor dhe gjyqësor.</p>
+            <p className="text-black/70 font-bold leading-relaxed text-left">Mbrojtje agresive në çdo fase të procesit hetimor dhe gjyqësor.</p>
             <ChevronRight className="absolute bottom-10 right-10 w-8 h-8 opacity-20 group-hover:translate-x-2 transition-transform" />
           </motion.div>
 
@@ -144,7 +150,6 @@ export default function Page() {
         <div className="flex items-center justify-center gap-2 font-bold mb-4 text-[#c5a059] opacity-30 uppercase tracking-[0.4em] text-[10px]">
           <Scale className="w-4 h-4" /> Lex Associates — Est. 2026
         </div>
-        <p className="text-white/10 text-[9px] uppercase tracking-widest italic">Integritet mbi të gjitha</p>
       </footer>
 
     </main>
