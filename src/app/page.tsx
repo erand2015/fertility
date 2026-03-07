@@ -1,153 +1,205 @@
 "use client"
 
-import { useState } from "react"
-import { PayPalScriptProvider } from "@paypal/react-paypal-js"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter } from "@/components/ui/sheet"
-import { ShoppingCart, Plus, Trash2, Store } from "lucide-react"
-import { PRODUCTS } from "@/lib/products"
-import PayPalButton from "@/components/PayPalButton"
+import { Card, CardContent } from "@/components/ui/card"
+import { 
+  Stethoscope, 
+  MessageCircle, 
+  ChevronRight, 
+  HeartPulse,
+  Microscope,
+  Baby,
+  MapPin,
+  Clock,
+  Phone
+} from "lucide-react"
 import Link from "next/link"
 
-const PAYPAL_CLIENT_ID = "test"; 
-
-export default function WarthogStore() {
-  const [cart, setCart] = useState<any[]>([]);
-
-  const addToCart = (product: any) => setCart([...cart, product]);
-  const removeFromCart = (index: number) => {
-    const newCart = [...cart];
-    newCart.splice(index, 1);
-    setCart(newCart);
-  };
-
-  const totalPrice = cart.reduce((acc, item) => acc + item.price, 0);
+export default function KlinikaProfesionale() {
+  
+  // NDRYSHO KETE NUMER ME NUMRIN TEND REAL
+  const WHATSAPP_NUMBER = "3556XXXXXXXX"; 
+  const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=Përshëndetje! Ju kontaktoj nga faqja e klinikës për një konsultë.`;
 
   return (
-    <PayPalScriptProvider options={{ clientId: PAYPAL_CLIENT_ID }}>
-      <main className="min-h-screen bg-slate-50 text-slate-900 p-6 md:p-12 font-sans">
-        
-        {/* HEADER & NAVBAR */}
-        <div className="max-w-6xl mx-auto flex justify-between items-center mb-12 border-b pb-6 text-black">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-2">
-              <Store className="w-8 h-8 text-blue-600" />
-              <h1 className="text-3xl font-black tracking-tighter">ALBANIA<span className="text-blue-600">SHOP</span></h1>
+    <main className="min-h-screen bg-white text-slate-900 font-sans">
+      
+      {/* --- 1. NAVBAR (MENUJA) --- */}
+      <nav className="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b px-6 py-4">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+            <div className="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-200">
+              <HeartPulse className="text-white w-6 h-6" />
             </div>
-            
-            <nav className="hidden md:flex gap-6 italic font-bold text-black">
-              <Link href="/" className="text-blue-600 border-b-2 border-blue-600">Ballina</Link>
-              <Link href="/rreth-nesh" className="text-slate-500 hover:text-blue-600 transition-colors">Rreth Nesh</Link>
-            </nav>
+            <h1 className="text-2xl font-black tracking-tighter">ALBANIA<span className="text-blue-600">FERTILITY</span></h1>
+          </div>
+          
+          <div className="hidden md:flex gap-8 font-bold text-sm uppercase tracking-widest text-slate-600">
+            <Link href="#sherbimet" className="hover:text-blue-600 transition-colors">Shërbimet</Link>
+            <Link href="#mjeket" className="hover:text-blue-600 transition-colors">Mjekët</Link>
+            <Link href="#kontakti" className="hover:text-blue-600 transition-colors">Kontakt</Link>
           </div>
 
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" className="relative border-2 border-slate-200">
-                <ShoppingCart className="w-5 h-5 mr-2" />
-                Shporta {cart.length > 0 && <Badge className="ml-2 bg-blue-600">{cart.length}</Badge>}
-              </Button>
-            </SheetTrigger>
-            <SheetContent className="bg-white w-full sm:w-[450px] flex flex-col text-black">
-              <SheetHeader>
-                <SheetTitle className="text-2xl font-bold border-b pb-4">Detajet e Porosisë</SheetTitle>
-              </SheetHeader>
-              
-              <div className="flex-1 overflow-y-auto py-6 space-y-4">
-                {cart.length === 0 ? (
-                  <p className="text-center text-slate-500 mt-10 italic">Nuk keni asnjë produkt në shportë.</p>
-                ) : (
-                  cart.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between bg-slate-50 p-3 rounded-lg border">
-                      <div className="flex items-center gap-3">
-                        <img src={item.image} className="w-10 h-10 rounded object-cover" alt="" />
-                        <div>
-                          <p className="font-bold text-sm">{item.name}</p>
-                          <p className="text-blue-600 font-bold text-xs">${item.price}</p>
-                        </div>
-                      </div>
-                      <Button variant="ghost" size="icon" onClick={() => removeFromCart(index)}>
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </Button>
-                    </div>
-                  ))
-                )}
-              </div>
+          <Button 
+            onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+            className="bg-blue-600 hover:bg-blue-700 rounded-full px-6 font-bold shadow-lg shadow-blue-100"
+          >
+            REZERVO TAKIM
+          </Button>
+        </div>
+      </nav>
 
-              <SheetFooter className="border-t pt-6">
-                <div className="w-full space-y-4">
-                  <div className="flex justify-between text-xl font-black mb-4">
-                    <span>TOTALI:</span>
-                    <span className="text-blue-600">${totalPrice}</span>
-                  </div>
-                  {cart.length > 0 ? (
-                    <PayPalButton amount={totalPrice} />
-                  ) : (
-                    <Button className="w-full bg-slate-200 text-slate-400 cursor-not-allowed" disabled>
-                      Shto produkte për të paguar
-                    </Button>
-                  )}
-                </div>
-              </SheetFooter>
-            </SheetContent>
-          </Sheet>
+      {/* --- 2. HERO SECTION --- */}
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-8 relative z-10 text-center lg:text-left">
+            <Badge className="bg-blue-50 text-blue-600 border-blue-100 px-4 py-1 text-sm font-bold animate-pulse">
+              Ekselencë në Fertilitet
+            </Badge>
+            <h2 className="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9] text-slate-900">
+              Rruga juaj drejt <br />
+              <span className="text-blue-600">Prindërimit.</span>
+            </h2>
+            <p className="text-xl text-slate-500 max-w-lg mx-auto lg:mx-0 leading-relaxed italic">
+              "Besimi juaj është misioni ynë. Shkenca takon përkushtimin për të krijuar familjen tuaj."
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button 
+                onClick={() => document.getElementById('sherbimet')?.scrollIntoView({ behavior: 'smooth' })}
+                className="h-16 px-10 rounded-2xl bg-slate-900 text-white text-lg font-bold hover:bg-blue-600 transition-all shadow-xl"
+              >
+                Shërbimet <ChevronRight className="ml-2 w-5 h-5" />
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="h-16 px-10 rounded-2xl border-2 text-lg font-bold group border-slate-200 hover:border-green-500 transition-all"
+                onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+              >
+                <MessageCircle className="mr-2 w-6 h-6 text-green-500 group-hover:scale-125 transition-transform" /> 
+                WhatsApp
+              </Button>
+            </div>
+          </div>
+          
+          <div className="relative">
+            <div className="absolute -top-20 -right-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 animate-pulse" />
+            <div className="relative rounded-[40px] overflow-hidden border-8 border-white shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+              <img 
+                src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1000" 
+                alt="Clinic Interior" 
+                className="w-full h-[500px] object-cover" 
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- 3. STATISTIKAT --- */}
+      <section className="py-16 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+          {[
+            { label: "Suksesi IVF", val: "94%" },
+            { label: "Bebe të Lindura", val: "1,200+" },
+            { label: "Vite Eksperiencë", val: "18+" },
+            { label: "Mjekë Specialistë", val: "12" },
+          ].map((stat, i) => (
+            <div key={i} className="text-center space-y-1">
+              <div className="text-4xl font-black text-blue-600 tracking-tighter">{stat.val}</div>
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* --- 4. SHERBIMET --- */}
+      <section id="sherbimet" className="py-32 px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-20 space-y-4">
+          <h3 className="text-sm font-black text-blue-600 uppercase tracking-[0.4em]">Ekspertiza Jonë</h3>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight">Trajtimet e Avancuara</h2>
         </div>
 
-        {/* PRODUKTET GRID */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {PRODUCTS.map((product) => (
-            <Card key={product.id} className="group overflow-hidden border-2 border-transparent hover:border-blue-600 transition-all shadow-md bg-white flex flex-col">
-              <Link href={`/product/${product.id}`} className="cursor-pointer">
-                <div className="aspect-square overflow-hidden relative">
-                  <img src={product.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={product.name} />
-                  <Badge className="absolute top-3 left-3 bg-white/90 text-slate-900">{product.category}</Badge>
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { title: "IVF & ICSI", icon: <Microscope className="w-7 h-7" />, desc: "Laboratori më modern në rajon për fekondim të asistuar me saktësi maksimale." },
+            { title: "Ngrirja e Vezëve", icon: <Baby className="w-7 h-7" />, desc: "Ruani mundësinë tuaj për prindërim në të ardhmen me teknologjinë Cryo." },
+            { title: "Diagnostikë", icon: <Stethoscope className="w-7 h-7" />, desc: "Kontroll i plotë i fertilitetit për meshkuj dhe femra me teknologjinë 4D." },
+          ].map((s, i) => (
+            <Card key={i} className="group hover:border-blue-600 transition-all duration-500 rounded-[35px] p-10 bg-white border-2 border-slate-50 hover:shadow-2xl hover:shadow-blue-50">
+              <CardContent className="p-0 space-y-6">
+                <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 transform group-hover:rotate-6">
+                  {s.icon}
                 </div>
-              </Link>
-
-              <CardHeader className="p-4">
-                <CardTitle className="text-lg font-bold truncate">
-                  <Link href={`/product/${product.id}`} className="hover:text-blue-600 transition-colors">
-                    {product.name}
-                  </Link>
-                </CardTitle>
-              </CardHeader>
-
-              <CardContent className="px-4 pb-2">
-                <div className="text-2xl font-black text-blue-600">${product.price}</div>
+                <h4 className="text-2xl font-bold tracking-tight">{s.title}</h4>
+                <p className="text-slate-500 leading-relaxed text-lg">{s.desc}</p>
               </CardContent>
-
-              <CardFooter className="p-4 mt-auto gap-2">
-                <Button onClick={() => addToCart(product)} className="flex-1 bg-slate-900 hover:bg-blue-600 text-white font-bold">
-                  <Plus className="w-4 h-4 mr-2" /> SHPORTË
-                </Button>
-                <Link href={`/product/${product.id}`}>
-                  <Button variant="outline" className="border-slate-200 hover:border-blue-600">
-                    SHIKO
-                  </Button>
-                </Link>
-              </CardFooter>
             </Card>
           ))}
         </div>
+      </section>
 
-        {/* NAVIGIMI I FAQEVE */}
-        <div className="max-w-6xl mx-auto flex justify-center items-center gap-2 mt-12 pb-12">
-          <Button variant="outline" className="bg-blue-600 text-white border-blue-600">1</Button>
-          <Link href="/faqe2">
-            <Button variant="outline" className="text-black hover:border-blue-600 hover:text-blue-600 transition-colors">2</Button>
-          </Link>
-          <Link href="/faqe3">
-            <Button variant="outline" className="text-black hover:border-blue-600 hover:text-blue-600 transition-colors">3</Button>
-          </Link>
-          <span className="text-slate-400 mx-2">...</span>
-          <Link href="/faqe10">
-            <Button variant="outline" className="text-black hover:border-blue-600 hover:text-blue-600 transition-colors">10</Button>
-          </Link>
+      {/* --- 5. KONTAKTI & FOOTER --- */}
+      <section id="kontakti" className="bg-slate-900 text-white py-24 rounded-t-[50px] px-6">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
+          <div className="space-y-8">
+            <h2 className="text-4xl font-black tracking-tight">Na vizitoni në Klinikë</h2>
+            <p className="text-slate-400 text-lg">Jemi gati t'ju mirëpresim për një konsultë fillestare pa asnjë detyrim.</p>
+            
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-600/20 p-3 rounded-full text-blue-400"><MapPin /></div>
+                <div>
+                  <div className="font-bold">Adresa</div>
+                  <div className="text-slate-400">Rruga "Sami Frashëri", Tiranë, Shqipëri</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-600/20 p-3 rounded-full text-blue-400"><Clock /></div>
+                <div>
+                  <div className="font-bold">Orari</div>
+                  <div className="text-slate-400">E Hënë - E Premte: 08:00 - 20:00</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="bg-blue-600/20 p-3 rounded-full text-blue-400"><Phone /></div>
+                <div>
+                  <div className="font-bold">Telefon</div>
+                  <div className="text-slate-400">+355 6X XXX XXXX</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white/5 p-8 rounded-[40px] border border-white/10 flex flex-col items-center justify-center text-center space-y-6">
+            <h3 className="text-2xl font-bold">Gati për të filluar?</h3>
+            <p className="text-slate-400">Klikoni butonin poshtë për të biseduar direkt me specialistët tanë në WhatsApp.</p>
+            <Button 
+              onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+              className="w-full py-8 bg-green-500 hover:bg-green-600 rounded-2xl text-xl font-bold"
+            >
+              BISEDO NË WHATSAPP
+            </Button>
+          </div>
         </div>
+        <div className="mt-20 pt-8 border-t border-white/10 text-center text-slate-500 text-sm">
+          &copy; 2024 ALBANIA FERTILITY CENTER. Të gjitha të drejtat e rezervuara.
+        </div>
+      </section>
 
-      </main>
-    </PayPalScriptProvider>
+      {/* --- 6. FLOATING WHATSAPP BUTTON --- */}
+      <div className="fixed bottom-8 right-8 z-[100] group">
+        <div className="absolute bottom-full right-0 mb-4 bg-white text-slate-900 px-4 py-2 rounded-xl shadow-2xl font-bold text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border animate-bounce">
+          Keni pyetje? Na shkruani!
+        </div>
+        <button 
+          onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+          className="bg-green-500 text-white p-5 rounded-full shadow-[0_20px_50px_rgba(34,197,94,0.4)] hover:scale-110 active:scale-95 transition-all"
+        >
+          <MessageCircle className="w-8 h-8" />
+        </button>
+      </div>
+
+    </main>
   )
 }
