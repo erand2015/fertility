@@ -1,98 +1,123 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-import { ChevronRight, Baby, ShieldCheck, Zap, Heart } from "lucide-react"
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
+import { Baby, Activity, Microscope, ShieldCheck, Heart, MessageCircle } from "lucide-react";
+import Link from "next/link";
 
-export default function AppleStyleFertility() {
-  const scrollIn = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.8, ease: "easeOut" }
-  };
+// Importet e Magic UI (Sigurohu që skedarët ekzistojnë në folderat e tyre)
+import ShinyButton from "@/components/magicui/shiny-button";
+import { MagicCard } from "@/components/magicui/magic-card";
+import { AnimatedBeam } from "@/components/magicui/animated-beam";
+import InteractiveGridPattern from "@/components/magicui/interactive-grid";
+
+export default function AlbaniaFertilityPage() {
+  const WHATSAPP_LINK = "https://wa.me/3556XXXXXXXX";
+  
+  // Referencat për Animated Beam
+  const containerRef = useRef(null);
+  const userRef = useRef(null);
+  const aiRef = useRef(null);
+  const labRef = useRef(null);
+  const heartRef = useRef(null);
 
   return (
     <main className="min-h-screen bg-white text-[#1d1d1f] antialiased">
       
-      {/* --- NAVBAR ULTRA-MINIMAL --- */}
+      {/* --- NAVBAR --- */}
       <nav className="fixed top-0 w-full z-[100] bg-white/80 backdrop-blur-md border-b border-[#f5f5f7]">
         <div className="max-w-[1000px] mx-auto h-12 md:h-14 flex justify-between items-center px-6">
           <div className="flex items-center gap-2 font-semibold tracking-tight text-lg">
             <Baby className="w-5 h-5 text-rose-500" />
             <span>Albania Fertility</span>
           </div>
-          <div className="hidden md:flex gap-8 text-xs font-medium text-[#1d1d1f]/80 italic">
-            <a href="#" className="hover:text-black transition-colors">Teknologjia</a>
-            <a href="#" className="hover:text-black transition-colors">Suksesi</a>
-            <a href="#" className="hover:text-black transition-colors">Për Ne</a>
+          <div className="hidden md:flex gap-8 text-[12px] font-medium text-[#1d1d1f]/80">
+            <Link href="/laboratori" className="hover:text-black transition-colors italic font-bold">Laboratori</Link>
+            <Link href="/rreth-nesh" className="hover:text-black transition-colors italic font-bold">Rreth Nesh</Link>
           </div>
-          <button className="bg-[#0071e3] hover:bg-[#0077ed] text-white text-[11px] px-3 py-1 rounded-full font-medium transition-all">
+          <button 
+            onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+            className="bg-[#0071e3] hover:bg-[#0077ed] text-white text-[11px] px-3 py-1 rounded-full font-medium transition-all"
+          >
             Kontakto
           </button>
         </div>
       </nav>
 
-      {/* --- HERO SECTION (APPLE STYLE) --- */}
-      <section className="pt-32 md:pt-48 pb-20 px-6 text-center">
-        <motion.div {...scrollIn} className="max-w-4xl mx-auto space-y-4">
-          <h2 className="text-[12px] font-bold tracking-[0.2em] text-[#86868b] uppercase">E REJA E VITIT 2026</h2>
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tight leading-none">
-            Mrekullia e jetës. <br />
-            <span className="text-[#86868b]">Me saktësi shkencore.</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-[#86868b] max-w-2xl mx-auto pt-6">
-            Zbuloni teknologjinë më të avancuar të fertilitetit në një ambient të krijuar për paqen tuaj.
-          </p>
-          <div className="flex justify-center gap-8 pt-10 font-medium">
-            <a href="#" className="text-[#0066cc] hover:underline flex items-center gap-1 text-xl">
-              Mëso më shumë <ChevronRight className="w-5 h-5" />
-            </a>
-            <a href="#" className="text-[#0066cc] hover:underline flex items-center gap-1 text-xl">
-              Konsultohu <ChevronRight className="w-5 h-5" />
-            </a>
-          </div>
-        </motion.div>
+      {/* --- BANNER (HERO SECTION) --- */}
+      <section className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-white">
+        <InteractiveGridPattern />
+        <div className="container relative z-10 px-6 flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 px-4 py-1.5 rounded-full border border-rose-100 bg-rose-50/50 text-rose-600 text-xs font-bold tracking-widest uppercase"
+          >
+            E ardhmja e familjes suaj fillon këtu
+          </motion.div>
 
-        {/* Hero Image - Simple & Powerful */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="mt-20 max-w-[1200px] mx-auto overflow-hidden rounded-[32px] bg-[#f5f5f7]"
-        >
-          <img 
-            src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=1470" 
-            alt="Clinic Tech" 
-            className="w-full h-auto object-cover hover:scale-105 transition-transform duration-1000"
-          />
-        </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="text-6xl md:text-[110px] font-bold tracking-tighter leading-[0.9] text-slate-900"
+          >
+            Mrekullia, <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-rose-500 to-orange-400">
+              e rimenduar.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="mt-8 max-w-2xl text-xl md:text-2xl text-slate-500 font-medium leading-relaxed"
+          >
+            Teknologjia më e avancuar gjenetike në Europë, tani në zemër të Tiranës. 
+          </motion.p>
+
+          <div className="mt-12 flex flex-col md:flex-row gap-6">
+            <ShinyButton onClick={() => window.open(WHATSAPP_LINK, '_blank')} className="px-10 py-4 text-lg">
+              Fillo Rrugëtimin Tani
+            </ShinyButton>
+          </div>
+        </div>
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-rose-200/30 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-200/20 rounded-full blur-[120px]" />
       </section>
 
-      {/* --- BENTO GRID SECTION (SHERBIMET) --- */}
-      <section className="py-20 px-6 bg-[#f5f5f7]">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* --- EKOSISTEMI (ANIMATED BEAM) --- */}
+      <section className="py-32 bg-slate-50 overflow-hidden">
+        <div className="max-w-[1000px] mx-auto px-6 text-center" ref={containerRef}>
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-20">Lidhja e Teknologjisë</h2>
           
-          {/* Card 1: Large */}
-          <motion.div {...scrollIn} className="md:col-span-2 bg-white rounded-[28px] p-10 flex flex-col justify-between h-[400px] md:h-[500px]">
-             <div>
-               <h3 className="text-3xl font-bold">Laboratori Gjenetik</h3>
-               <p className="text-[#86868b] mt-4 max-w-sm">Teknologjia më e fundit e sekuencimit për të siguruar shëndetin e foshnjës suaj.</p>
-             </div>
-             <div className="flex justify-center">
-               <Zap className="w-32 h-32 text-rose-500 opacity-20" />
-             </div>
-          </motion.div>
+          <div className="relative flex w-full items-center justify-center h-[500px]">
+            <div className="flex flex-col items-center justify-between h-full w-full max-w-lg z-10">
+              <div className="flex w-full justify-between">
+                <div ref={labRef} className="p-6 bg-white rounded-2xl shadow-xl border border-slate-100"><Microscope className="w-8 h-8 text-blue-500" /></div>
+                <div ref={aiRef} className="p-6 bg-white rounded-2xl shadow-xl border border-slate-100"><Activity className="w-8 h-8 text-rose-500" /></div>
+              </div>
+              <div ref={userRef} className="p-10 bg-[#1d1d1f] rounded-full shadow-2xl"><Baby className="w-12 h-12 text-white" /></div>
+              <div className="flex w-full justify-center"><div ref={heartRef} className="p-6 bg-white rounded-2xl shadow-xl border border-slate-100"><Heart className="w-8 h-8 text-rose-400" /></div></div>
+            </div>
 
-          {/* Card 2: Small */}
-          <motion.div {...scrollIn} className="bg-white rounded-[28px] p-10 flex flex-col justify-between h-[400px] md:h-[500px]">
-             <h3 className="text-3xl font-bold leading-tight">Privatësi <br /> Absolute.</h3>
-             <ShieldCheck className="w-16 h-16 text-green-500" />
-          </motion.div>
-
+            <AnimatedBeam containerRef={containerRef} fromRef={labRef} toRef={userRef} gradientStartColor="#3b82f6" gradientStopColor="#60a5fa" />
+            <AnimatedBeam containerRef={containerRef} fromRef={aiRef} toRef={userRef} gradientStartColor="#f43f5e" gradientStopColor="#fb7185" />
+            <AnimatedBeam containerRef={containerRef} fromRef={heartRef} toRef={userRef} curvature={20} gradientStartColor="#fb7185" gradientStopColor="#fda4af" />
+          </div>
         </div>
       </section>
 
+      {/* FLOATING WHATSAPP BUTTON */}
+      <div className="fixed bottom-6 right-6 z-[100]">
+        <button 
+          onClick={() => window.open(WHATSAPP_LINK, '_blank')}
+          className="bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform"
+        >
+          <MessageCircle className="w-7 h-7" />
+        </button>
+      </div>
     </main>
   );
 }
