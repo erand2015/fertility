@@ -5,21 +5,14 @@ import { motion, Variants, AnimatePresence } from "framer-motion";
 import { Scale, ShieldCheck, Gavel, FileText, Phone, ChevronRight, Menu, X, Instagram, Facebook } from "lucide-react";
 import ShinyButton from "@/components/magicui/shiny-button";
 import InteractiveGridPattern from "@/components/magicui/interactive-grid";
+import Link from "next/link"; 
 
-// --- ANIMACIONET ---
+// --- ANIMACIONET (mbeten njesoj) ---
 const gavelVariants: Variants = {
   initial: { rotate: 0 },
   animate: { 
     rotate: [-25, 15, -20, 10, 0], 
     transition: { duration: 0.6, ease: "easeOut" as const } 
-  }
-};
-
-const scaleVariants: Variants = {
-  initial: { rotate: 0 },
-  animate: { 
-    rotate: [-10, 10, -10, 10, 0], 
-    transition: { duration: 1.2, ease: "easeInOut" as const } 
   }
 };
 
@@ -43,12 +36,7 @@ export default function Page() {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    // Bllokon scroll-in e faqes kur menuja është e hapur
-    if (!isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = !isOpen ? "hidden" : "unset";
   };
 
   return (
@@ -60,98 +48,47 @@ export default function Page() {
           <div className="flex items-center justify-between px-6 md:px-8 py-5 rounded-[24px] bg-[#0a0a0a]/80 backdrop-blur-2xl border border-white/10 shadow-2xl relative z-[110]">
             
             {/* Logo */}
-            <motion.div whileHover="animate" initial="initial" className="flex items-center gap-3 cursor-pointer group">
+            <Link href="/" className="flex items-center gap-3 cursor-pointer group">
               <div className="p-2.5 rounded-xl bg-[#c5a059]/10 border border-[#c5a059]/20 group-hover:bg-[#c5a059] transition-all">
-                <motion.div variants={scaleVariants}>
-                  <Scale className="w-6 h-6 text-[#c5a059] group-hover:text-black" />
-                </motion.div>
+                <Scale className="w-6 h-6 text-[#c5a059] group-hover:text-black" />
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col text-left">
                 <span className="text-xl font-black tracking-tighter leading-none uppercase">
                   Lex <span className="text-[#c5a059]">Associates</span>
                 </span>
                 <span className="text-[9px] tracking-[0.3em] uppercase opacity-40 font-bold mt-1">Studio Elitare</span>
               </div>
-            </motion.div>
+            </Link>
 
-            {/* Desktop Menu */}
+            {/* Desktop Menu - NDRYSHUAR KETU */}
             <div className="hidden lg:flex items-center gap-10 text-[12px] font-bold uppercase tracking-widest text-white/50">
-              <a href="#services" className="hover:text-white transition-all">Shërbimet</a>
-              <a href="#contact" className="hover:text-white transition-all">Kontakt</a>
+              <Link href="/sherbimet" className="hover:text-white transition-all">Shërbimet</Link>
+              <Link href="/kontakt" className="hover:text-white transition-all">Kontakt</Link>
             </div>
 
-            {/* Actions */}
             <div className="flex items-center gap-4">
-              <button 
-                onClick={() => window.location.href = CONTACT_LINK}
-                className="hidden md:block bg-[#c5a059] text-black px-6 py-3 rounded-xl font-bold text-[11px] uppercase tracking-wider hover:bg-white transition-all shadow-lg"
-              >
-                Konsultë
-              </button>
-
-              {/* Hamburger Button */}
-              <button 
-                onClick={toggleMenu}
-                className="lg:hidden p-2 text-[#c5a059] relative z-[120] transition-transform active:scale-90"
-              >
+              <Link href="/kontakt">
+                <button className="hidden md:block bg-[#c5a059] text-black px-6 py-3 rounded-xl font-bold text-[11px] uppercase tracking-wider hover:bg-white transition-all shadow-lg">
+                  Konsultë
+                </button>
+              </Link>
+              <button onClick={toggleMenu} className="lg:hidden p-2 text-[#c5a059] relative z-[120]">
                 {isOpen ? <X size={32} /> : <Menu size={32} />}
               </button>
             </div>
           </div>
         </div>
 
-        {/* --- MOBILE FULL SCREEN MENU --- */}
+        {/* --- MOBILE MENU --- */}
         <AnimatePresence>
           {isOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-[#030303]/98 backdrop-blur-3xl z-[105] flex flex-col items-center justify-center lg:hidden"
-            >
-              {/* Gold Glow Decor */}
-              <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#c5a059]/10 blur-[120px] rounded-full" />
-              <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#c5a059]/5 blur-[120px] rounded-full" />
-
-              <motion.div 
-                variants={menuVariants}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                className="flex flex-col items-center gap-12 text-center relative z-10"
-              >
-                <motion.a 
-                  variants={itemVariants}
-                  href="#services" 
-                  onClick={toggleMenu}
-                  className="text-5xl font-black uppercase tracking-[0.1em] text-white/90 hover:text-[#c5a059] transition-colors"
-                >
-                  Shërbimet
-                </motion.a>
-                
-                <motion.a 
-                  variants={itemVariants}
-                  href="#contact" 
-                  onClick={toggleMenu}
-                  className="text-5xl font-black uppercase tracking-[0.1em] text-white/90 hover:text-[#c5a059] transition-colors"
-                >
-                  Kontakt
-                </motion.a>
-
-                <motion.div variants={itemVariants} className="pt-6">
-                  <button 
-                    onClick={() => { window.location.href = CONTACT_LINK; toggleMenu(); }}
-                    className="bg-[#c5a059] text-black px-12 py-6 rounded-2xl font-black uppercase tracking-[0.2em] shadow-[0_20px_50px_rgba(197,160,89,0.4)]"
-                  >
-                    Më telefono tani
-                  </button>
-                </motion.div>
-
-                {/* Social Icons */}
-                <motion.div variants={itemVariants} className="flex gap-8 pt-10">
-                  <Instagram className="w-8 h-8 text-white/20 hover:text-[#c5a059] transition-colors cursor-pointer" />
-                  <Facebook className="w-8 h-8 text-white/20 hover:text-[#c5a059] transition-colors cursor-pointer" />
-                </motion.div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-[#030303]/98 backdrop-blur-3xl z-[105] flex flex-col items-center justify-center lg:hidden">
+              <motion.div variants={menuVariants} initial="closed" animate="open" exit="closed" className="flex flex-col items-center gap-12 text-center">
+                <Link href="/sherbimet" onClick={toggleMenu} className="text-5xl font-black uppercase tracking-[0.1em] text-white/90">Shërbimet</Link>
+                <Link href="/kontakt" onClick={toggleMenu} className="text-5xl font-black uppercase tracking-[0.1em] text-white/90">Kontakt</Link>
+                <Link href="/kontakt" onClick={toggleMenu}>
+                  <button className="bg-[#c5a059] text-black px-12 py-6 rounded-2xl font-black uppercase tracking-[0.2em]">Na Shkruani</button>
+                </Link>
               </motion.div>
             </motion.div>
           )}
@@ -161,87 +98,29 @@ export default function Page() {
       {/* --- HERO SECTION --- */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden text-left">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" 
-            alt="Law and Justice" 
-            className="w-full h-full object-cover opacity-30 grayscale-[50%] sepia-[20%]"
-          />
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover opacity-30 grayscale-[50%]" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#030303] via-[#030303]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-transparent to-[#030303]" />
           <InteractiveGridPattern className="opacity-10" />
         </div>
 
         <div className="relative z-10 px-6 max-w-6xl mx-auto w-full">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            className="max-w-3xl space-y-8"
-          >
-            <div className="inline-block px-4 py-1.5 rounded-full border border-[#c5a059]/30 bg-[#c5a059]/10 text-[#c5a059] text-[10px] font-bold tracking-[0.3em] uppercase backdrop-blur-md">
-              Mbrojtje • Integritet • Rezultate
-            </div>
-
-            <h1 className="text-5xl md:text-[100px] font-bold tracking-tighter leading-[0.9] md:leading-[0.85]">
-              Drejtësi që <br />
-              <span className="text-[#c5a059] italic font-serif">ju takon.</span>
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }} className="max-w-3xl space-y-8">
+            <h1 className="text-5xl md:text-[100px] font-bold tracking-tighter leading-[0.9]">
+              Drejtësi që <br /> <span className="text-[#c5a059] italic font-serif">ju takon.</span>
             </h1>
-
-            <p className="text-lg md:text-xl text-white/60 max-w-xl leading-relaxed">
-              Përfaqësim ligjor elitar për individë dhe korporata. Ne mbrojmë interesat tuaja me strategji moderne dhe integritet të palëkundur.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-5 pt-4">
-              <ShinyButton
-                onClick={() => window.location.href = CONTACT_LINK}
-                className="px-12 py-5 bg-[#c5a059] text-black text-lg font-black rounded-xl shadow-[0_10px_40px_rgba(197,160,89,0.3)]"
-              >
-                Rezervo Konsultë
-              </ShinyButton>
-              <button 
-                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-12 py-5 border border-white/20 rounded-xl text-sm font-bold hover:bg-white/10 transition-all uppercase tracking-widest backdrop-blur-sm"
-              >
-                Eksploro Shërbimet
-              </button>
+            <div className="flex flex-col sm:flex-row gap-5">
+              <Link href="/kontakt">
+                <ShinyButton className="px-12 py-5 bg-[#c5a059] text-black text-lg font-black rounded-xl">Rezervo Konsultë</ShinyButton>
+              </Link>
+              <Link href="/sherbimet">
+                <button className="px-12 py-5 border border-white/20 rounded-xl text-sm font-bold hover:bg-white/10 transition-all uppercase tracking-widest backdrop-blur-sm">
+                  Eksploro Shërbimet
+                </button>
+              </Link>
             </div>
           </motion.div>
         </div>
       </section>
-
-      {/* --- SERVICES --- */}
-      <section id="services" className="max-w-6xl mx-auto px-6 py-20 md:py-40 scroll-mt-32">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-          <motion.div whileHover={{ y: -10 }} className="bg-[#0b0b0c] p-10 md:p-12 rounded-[32px] border border-white/5 hover:border-[#c5a059]/20 transition-all">
-            <ShieldCheck className="w-10 h-10 text-[#c5a059] mb-8" />
-            <h3 className="text-2xl font-bold mb-4">E Drejta Tregtare</h3>
-            <p className="text-white/40 leading-relaxed">Konsulencë ligjore për bizneset dhe mbrojtjen e investimeve kapitale.</p>
-          </motion.div>
-
-          <motion.div initial="initial" whileHover="animate" className="bg-gradient-to-br from-[#c5a059] to-[#9e7b39] p-10 md:p-12 rounded-[32px] text-black shadow-2xl cursor-pointer relative overflow-hidden group">
-            <motion.div variants={gavelVariants} className="origin-bottom-right inline-block">
-              <Gavel className="w-12 h-12 mb-8" />
-            </motion.div>
-            <h3 className="text-2xl font-black mb-4 uppercase tracking-tighter text-left">Mbrojtje Penale</h3>
-            <p className="text-black/70 font-bold leading-relaxed text-left">Mbrojtje agresive në çdo fazë të procesit hetimor dhe gjyqësor.</p>
-            <ChevronRight className="absolute bottom-10 right-10 w-8 h-8 opacity-20 group-hover:translate-x-2 transition-transform" />
-          </motion.div>
-
-          <motion.div whileHover={{ y: -10 }} className="bg-[#0b0b0c] p-10 md:p-12 rounded-[32px] border border-white/5 hover:border-[#c5a059]/20 transition-all">
-            <FileText className="w-10 h-10 text-[#c5a059] mb-8" />
-            <h3 className="text-2xl font-bold mb-4">Litigim Civil</h3>
-            <p className="text-white/40 leading-relaxed">Zgjidhja e mosmarrëveshjeve pronësore me saktësi dhe diskrecion.</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* --- FOOTER --- */}
-      <footer id="contact" className="py-20 border-t border-white/5 text-center">
-        <div className="flex items-center justify-center gap-2 font-bold mb-4 text-[#c5a059] opacity-30 uppercase tracking-[0.4em] text-[10px]">
-          <Scale className="w-4 h-4" /> Lex Associates — Est. 2026
-        </div>
-      </footer>
-
     </main>
   );
 }

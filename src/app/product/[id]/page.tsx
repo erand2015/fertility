@@ -1,101 +1,88 @@
-"use client"
+"use client";
 
-import React from "react"
-import { motion } from "framer-motion"
-import { ChevronLeft, Heart, Users, Award, Star } from "lucide-react"
-import Link from "next/link"
+import React from "react";
+import { useParams } from "next/navigation";
+import { motion } from "framer-motion";
+import { Scale, ChevronLeft, ShoppingBag, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import ShinyButton from "@/components/magicui/shiny-button";
 
-export default function RrethNeshPage() {
+export default function ProductDetails() {
+  const params = useParams();
+  const id = params.id;
+
+  // Këtu mund të bësh një fetch nga database ose API bazuar në ID-në
+  // Për momentin po përdorim të dhëna "dummy"
+  const product = {
+    name: "Konsulencë Ligjore Premium",
+    price: "250€",
+    description: "Një seancë e plotë 60-minutëshe me ekspertët tanë elitarë për çështje tregtare dhe civile.",
+    features: ["Analizë e detajuar e dokumenteve", "Strategji mbrojtjeje", "Konfidencialitet i plotë"]
+  };
+
   return (
-    <main className="min-h-screen bg-white text-[#1d1d1f] antialiased">
-      {/* Mini-Navbar */}
-      <nav className="p-6 border-b border-[#f5f5f7]">
-        <Link href="/" className="flex items-center gap-2 text-[#0066cc] font-semibold hover:underline">
-          <ChevronLeft className="w-4 h-4" /> Faqja Kryesore
+    <main className="min-h-screen bg-[#030303] text-white antialiased text-left">
+      {/* Navbar i thjeshtë për këtë faqe */}
+      <nav className="p-8">
+        <Link href="/" className="inline-flex items-center gap-2 text-[#c5a059] hover:opacity-80 font-bold uppercase tracking-widest text-xs">
+          <ChevronLeft size={16} /> Kthehu Pas
         </Link>
       </nav>
 
-      <section className="max-w-[1000px] mx-auto px-6 py-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-20"
-        >
-          {/* Header */}
-          <div className="text-center space-y-6">
-            <h2 className="text-[14px] font-bold tracking-[0.2em] text-[#86868b] uppercase italic">Misioni Ynë</h2>
-            <h1 className="text-5xl md:text-8xl font-bold tracking-tight">
-              Besimi juaj. <br/>
-              <span className="text-[#86868b]">Qëllimi ynë.</span>
-            </h1>
-          </div>
+      <section className="max-w-6xl mx-auto px-6 py-12 lg:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Fotoja e Produktit / Shërbimit */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="aspect-square rounded-[40px] bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] border border-white/5 flex items-center justify-center relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-[#c5a059]/5 blur-[80px] rounded-full" />
+            <Scale className="w-32 h-32 text-[#c5a059] opacity-20" />
+            <span className="absolute bottom-8 left-8 text-[10px] uppercase tracking-[0.5em] text-white/20">Lex Associates ID: {id}</span>
+          </motion.div>
 
-          {/* Imazhi Kryesor - Stili Apple Editorial */}
-          <div className="rounded-[40px] overflow-hidden bg-[#f5f5f7]">
-            <img 
-              src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1200" 
-              alt="Stafi i Klinikes" 
-              className="w-full h-[500px] object-cover"
-            />
-          </div>
-
-          {/* Historia dhe Vlerat */}
-          <div className="grid md:grid-cols-2 gap-16 items-start pt-10">
-            <div className="space-y-6">
-              <h3 className="text-3xl font-bold italic">Kush jemi ne?</h3>
-              <p className="text-xl text-[#86868b] leading-relaxed font-medium">
-                Albania Fertility lindi nga dëshira për të sjellë standardet më të larta të mjekësisë europiane në Shqipëri. Ne besojmë se çdo çift meriton jo vetëm teknologjinë më të fundit, por edhe një rrugëtim human dhe të mbështetur.
-              </p>
+          {/* Detajet e Produktit */}
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="space-y-8"
+          >
+            <div className="space-y-4">
+              <div className="inline-block px-4 py-1 rounded-full border border-[#c5a059]/30 bg-[#c5a059]/10 text-[#c5a059] text-[10px] font-bold uppercase tracking-widest">
+                Kategoria: Shërbime Ligjore
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none">
+                {product.name}
+              </h1>
+              <p className="text-4xl font-serif italic text-[#c5a059]">{product.price}</p>
             </div>
-            <div className="space-y-6 text-[#1d1d1f]">
-               <p className="text-lg leading-relaxed">
-                 Me një përvojë mbi 15-vjeçare në fushën e fertilitetit, ekipi ynë i mjekëve dhe embriologëve punon me një qëllim të vetëm: të kthejë shpresën në realitet. Ne nuk trajtojmë thjesht raste, ne ndërtojmë familje.
-               </p>
+
+            <p className="text-white/50 text-xl leading-relaxed">
+              {product.description}
+            </p>
+
+            <div className="space-y-4 py-6 border-y border-white/5">
+              {product.features.map((feature, i) => (
+                <div key={i} className="flex items-center gap-3 text-sm font-bold uppercase tracking-wider text-white/80">
+                  <ShieldCheck size={18} className="text-[#c5a059]" />
+                  {feature}
+                </div>
+              ))}
             </div>
-          </div>
 
-          {/* Statistikat/Vlerat - Bento Grid i vogël */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
-            {[
-              { title: "15+ Vite", desc: "Përvojë ndërkombëtare", icon: <Award className="w-8 h-8 text-blue-500" /> },
-              { title: "Staf i Specializuar", desc: "Mjekë të certifikuar në BE", icon: <Users className="w-8 h-8 text-rose-500" /> },
-              { title: "Kujdes 24/7", desc: "Pranë jush në çdo moment", icon: <Heart className="w-8 h-8 text-green-500" /> },
-            ].map((item, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-[#f5f5f7] p-10 rounded-[32px] text-center space-y-4"
-              >
-                <div className="flex justify-center">{item.icon}</div>
-                <h4 className="font-bold text-2xl tracking-tight">{item.title}</h4>
-                <p className="text-[#86868b] font-medium">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+            <div className="pt-4">
+              <ShinyButton className="w-full md:w-auto px-12 py-6 bg-[#c5a059] text-black text-xl font-black rounded-2xl shadow-[0_20px_50px_rgba(197,160,89,0.3)]">
+                <span className="flex items-center gap-3">
+                  <ShoppingBag size={20} /> POROSIT TANI
+                </span>
+              </ShinyButton>
+            </div>
+          </motion.div>
 
-          {/* Quote Section */}
-          <div className="bg-[#1d1d1f] text-white p-12 md:p-20 rounded-[40px] text-center space-y-8">
-             <Star className="w-10 h-10 text-yellow-400 mx-auto fill-yellow-400" />
-             <blockquote className="text-2xl md:text-4xl font-medium tracking-tight leading-snug">
-               "Në qendër të punës sonë nuk janë vetëm pajisjet, por njerëzit dhe ëndrrat e tyre."
-             </blockquote>
-             <cite className="block text-[#86868b] font-bold not-italic tracking-widest uppercase text-sm">
-               — Dr. Erandi, Drejtor Mjekësor
-             </cite>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Footer Minimalist */}
-      <footer className="py-20 border-t border-[#f5f5f7] bg-[#fbfbfd]">
-        <div className="max-w-[1000px] mx-auto px-6 text-[12px] text-[#86868b] font-medium">
-          <p>© 2026 Albania Fertility. Ekselencë në çdo hap.</p>
         </div>
-      </footer>
+      </section>
     </main>
   );
 }
