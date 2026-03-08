@@ -9,7 +9,8 @@ import {
   Menu, 
   X, 
   ChevronRight, 
-  ArrowRight 
+  ArrowRight,
+  ChevronUp 
 } from "lucide-react";
 import Link from "next/link";
 import ShinyButton from "@/components/magicui/shiny-button";
@@ -36,18 +37,23 @@ export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // Monitoron scroll-in
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 100);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <main className="min-h-screen bg-[#030303] text-white antialiased selection:bg-[#c5a059] selection:text-black scroll-smooth overflow-x-hidden">
       
-      {/* --- NAVBAR --- */}
+      {/* --- NAVBAR DINAMIK --- */}
       <nav className={`fixed top-0 left-0 w-full z-[100] px-4 md:px-8 transition-all duration-700 ${isScrolled && !isOpen ? "opacity-0 -translate-y-full pointer-events-none" : "opacity-100 translate-y-0"}`}>
         <div className="max-w-6xl mx-auto py-6 relative">
           <div className="flex items-center justify-between px-6 md:px-8 py-5 rounded-[24px] bg-[#0a0a0a]/80 backdrop-blur-2xl border border-white/10 shadow-2xl relative z-[110]">
@@ -92,13 +98,13 @@ export default function Page() {
         </div>
       </nav>
 
-      {/* --- HERO SECTION ME FOTO --- */}
+      {/* --- HERO SECTION --- */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" 
             className="w-full h-full object-cover opacity-20 grayscale scale-105" 
-            alt="Background"
+            alt="Background Office"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030303]/80 to-[#030303]" />
           <InteractiveGridPattern className="opacity-10" />
@@ -119,12 +125,11 @@ export default function Page() {
         </div>
       </section>
 
-      {/* --- SERVICES ME EFEKTE INTERAKTIVE --- */}
+      {/* --- SERVICES SECTION --- */}
       <section className="py-24 px-6 relative bg-[#030303]">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          {/* E Drejta Tregtare */}
-          <motion.div whileHover="animate" className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all text-left group">
+          <motion.div whileHover="animate" className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all group text-left">
             <motion.div variants={scaleVariants} className="mb-8 w-fit p-4 rounded-2xl bg-[#c5a059]/5 border border-[#c5a059]/10">
               <Scale className="w-10 h-10 text-[#c5a059]" />
             </motion.div>
@@ -133,8 +138,7 @@ export default function Page() {
             <Link href="/sherbimet" className="flex items-center gap-2 text-[#c5a059] text-[10px] font-black uppercase tracking-[0.2em] group-hover:gap-4 transition-all">Më shumë <ChevronRight size={14} /></Link>
           </motion.div>
 
-          {/* Mbrojtje Penale */}
-          <motion.div whileHover="animate" className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all relative overflow-hidden text-left group">
+          <motion.div whileHover="animate" className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all relative overflow-hidden group text-left">
             <div className="absolute top-[-20px] right-[-20px] p-8 opacity-[0.03] rotate-12 scale-150"><Gavel size={200} /></div>
             <motion.div variants={gavelVariants} className="mb-8 w-fit p-4 rounded-2xl bg-[#c5a059]/5 border border-[#c5a059]/10">
               <Gavel className="w-10 h-10 text-[#c5a059]" />
@@ -144,8 +148,7 @@ export default function Page() {
             <Link href="/sherbimet" className="flex items-center gap-2 text-[#c5a059] text-[10px] font-black uppercase tracking-[0.2em] group-hover:gap-4 transition-all">Më shumë <ChevronRight size={14} /></Link>
           </motion.div>
 
-          {/* Siguri Ligjore */}
-          <motion.div whileHover={{ y: -10 }} className="bg-[#c5a059] p-10 rounded-[48px] text-black transition-all text-left shadow-2xl">
+          <motion.div whileHover={{ y: -10 }} className="bg-[#c5a059] p-10 rounded-[48px] text-black transition-all shadow-2xl text-left">
             <div className="mb-8 p-4 rounded-2xl bg-black/10 w-fit">
               <ShieldCheck className="w-10 h-10 text-black" />
             </div>
@@ -157,9 +160,26 @@ export default function Page() {
         </div>
       </section>
 
+      {/* --- FOOTER --- */}
       <footer className="py-20 border-t border-white/5 text-center opacity-20 text-[10px] uppercase tracking-[0.5em] font-bold">
         Lex Associates • 2026 • Studio Juridike Elitare
       </footer>
+
+      {/* --- BUTONI BACK TO TOP --- */}
+      <AnimatePresence>
+        {isScrolled && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            onClick={scrollToTop}
+            className="fixed bottom-8 right-8 z-[150] p-4 rounded-full bg-[#c5a059] text-black shadow-[0_10px_40px_rgba(197,160,89,0.5)] hover:bg-white transition-all group"
+          >
+            <ChevronUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
     </main>
   );
 }
