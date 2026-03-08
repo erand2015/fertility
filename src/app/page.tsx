@@ -9,7 +9,6 @@ import {
   Menu, 
   X, 
   ChevronRight, 
-  ArrowRight,
   ChevronUp,
   Users,
   Briefcase,
@@ -30,20 +29,24 @@ const iconAnimation: Variants = {
   animate: { scale: 1.1, rotate: [0, -5, 5, 0], transition: { duration: 0.5 } }
 };
 
+const menuVariants: Variants = {
+  closed: { opacity: 0, y: "-100%", transition: { duration: 0.5, ease: "easeInOut" } },
+  open: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeInOut" } }
+};
+
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // --- KODI PER REFRESH NE TOP ---
+  // --- REFRESH NE TOP ---
   useEffect(() => {
-    // Kjo linjë i thotë browser-it "mos e mbaj mend ku isha"
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    // Detyron scroll-in në pikën 0 (lart) menjëherë
     window.scrollTo(0, 0);
   }, []);
 
+  // --- SCROLL LOGIC PER NAVBAR ---
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
@@ -72,21 +75,62 @@ export default function Page() {
                 <span className="text-[9px] tracking-[0.3em] uppercase opacity-40 font-bold mt-1 italic">Studio Elitare</span>
               </div>
             </Link>
+
+            {/* Desktop Links */}
             <div className="hidden lg:flex items-center gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
               <Link href="/sherbimet" className="hover:text-[#c5a059] transition-all">Shërbimet</Link>
               <Link href="/kontakt" className="hover:text-[#c5a059] transition-all">Kontakt</Link>
             </div>
+
             <div className="flex items-center gap-4">
               <Link href="/kontakt" className="hidden md:block">
                 <button className="bg-[#c5a059] text-black px-6 py-3 rounded-xl font-bold text-[11px] uppercase tracking-wider hover:bg-white transition-all shadow-lg">Konsultë</button>
               </Link>
-              <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2 text-[#c5a059]">
+              {/* MOBILE HAMBURGER BUTTON */}
+              <button 
+                onClick={() => setIsOpen(!isOpen)} 
+                className="lg:hidden p-2 text-[#c5a059] relative z-[120]"
+              >
                 {isOpen ? <X size={32} /> : <Menu size={32} />}
               </button>
             </div>
           </div>
         </div>
       </nav>
+
+      {/* --- MOBILE MENU OVERLAY --- */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            variants={menuVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            className="fixed inset-0 bg-[#030303] z-[105] flex flex-col items-center justify-center gap-8 lg:hidden px-6"
+          >
+            <Link 
+              href="/sherbimet" 
+              onClick={() => setIsOpen(false)}
+              className="text-4xl font-black uppercase italic tracking-tighter hover:text-[#c5a059] transition-all"
+            >
+              Shërbimet
+            </Link>
+            <Link 
+              href="/kontakt" 
+              onClick={() => setIsOpen(false)}
+              className="text-4xl font-black uppercase italic tracking-tighter hover:text-[#c5a059] transition-all"
+            >
+              Kontakt
+            </Link>
+            <div className="w-full max-w-xs h-[1px] bg-white/10 my-4" />
+            <Link href="/kontakt" onClick={() => setIsOpen(false)}>
+              <button className="bg-[#c5a059] text-black w-full py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl">
+                Rezervo Konsultë
+              </button>
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* --- HERO --- */}
       <section className="relative min-h-[85vh] flex items-center justify-center pt-24 overflow-hidden">
@@ -117,7 +161,7 @@ export default function Page() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            {/* 1. Tregtare (Zezë) */}
+            {/* 1. Tregtare */}
             <motion.div whileHover="animate" variants={cardHover} className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all group relative overflow-hidden flex flex-col justify-between min-h-[380px]">
               <div>
                 <motion.div variants={iconAnimation} className="mb-8 w-fit p-4 rounded-2xl bg-[#c5a059]/5 border border-[#c5a059]/10">
@@ -129,7 +173,7 @@ export default function Page() {
               <Link href="/sherbimet" className="flex items-center gap-2 text-[#c5a059] text-[10px] font-black uppercase tracking-[0.2em] group-hover:gap-4 transition-all mt-8">Më shumë <ChevronRight size={14} /></Link>
             </motion.div>
 
-            {/* 2. Penale (Zezë) */}
+            {/* 2. Penale */}
             <motion.div whileHover="animate" variants={cardHover} className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all relative overflow-hidden group flex flex-col justify-between min-h-[380px]">
               <div className="absolute top-[-20px] right-[-20px] p-8 opacity-[0.03] rotate-12 scale-150"><Gavel size={200} /></div>
               <div>
@@ -166,7 +210,7 @@ export default function Page() {
               <Link href="/sherbimet" className="flex items-center gap-2 text-black text-[10px] font-black uppercase tracking-[0.2em] mt-8">Më shumë <ChevronRight size={14} /></Link>
             </motion.div>
 
-            {/* 5. E Drejta e Punës (Zezë) */}
+            {/* 5. Punës */}
             <motion.div whileHover="animate" variants={cardHover} className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all group flex flex-col justify-between min-h-[380px]">
               <div>
                 <motion.div variants={iconAnimation} className="mb-8 w-fit p-4 rounded-2xl bg-[#c5a059]/5 border border-[#c5a059]/10">
@@ -178,7 +222,7 @@ export default function Page() {
               <Link href="/sherbimet" className="flex items-center gap-2 text-[#c5a059] text-[10px] font-black uppercase tracking-[0.2em] group-hover:gap-4 transition-all mt-8">Më shumë <ChevronRight size={14} /></Link>
             </motion.div>
 
-            {/* 6. Pronësia Intelektuale (Zezë) */}
+            {/* 6. Pronësia Intelektuale */}
             <motion.div whileHover="animate" variants={cardHover} className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all group flex flex-col justify-between min-h-[380px]">
               <div>
                 <motion.div variants={iconAnimation} className="mb-8 w-fit p-4 rounded-2xl bg-[#c5a059]/5 border border-[#c5a059]/10">
@@ -189,7 +233,6 @@ export default function Page() {
               </div>
               <Link href="/sherbimet" className="flex items-center gap-2 text-[#c5a059] text-[10px] font-black uppercase tracking-[0.2em] group-hover:gap-4 transition-all mt-8">Më shumë <ChevronRight size={14} /></Link>
             </motion.div>
-
           </div>
         </div>
       </section>
@@ -198,10 +241,15 @@ export default function Page() {
         Lex Associates • 2026 • Studio Juridike Elitare
       </footer>
 
-      {/* --- BACK TO TOP --- */}
       <AnimatePresence>
         {isScrolled && (
-          <motion.button initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }} onClick={scrollToTop} className="fixed bottom-8 right-8 z-[150] p-4 rounded-full bg-[#c5a059] text-black shadow-2xl hover:bg-white transition-all group">
+          <motion.button 
+            initial={{ opacity: 0, scale: 0.5 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            exit={{ opacity: 0, scale: 0.5 }} 
+            onClick={scrollToTop} 
+            className="fixed bottom-8 right-8 z-[150] p-4 rounded-full bg-[#c5a059] text-black shadow-2xl hover:bg-white transition-all group"
+          >
             <ChevronUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
           </motion.button>
         )}
