@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, Variants, AnimatePresence } from "framer-motion";
 import { 
   Scale, 
   ShieldCheck, 
@@ -12,10 +12,25 @@ import {
   ArrowRight 
 } from "lucide-react";
 import Link from "next/link";
-
-// Komponentet e MagicUI - Sigurohu qe ekzistojne ne projektin tend
 import ShinyButton from "@/components/magicui/shiny-button";
 import InteractiveGridPattern from "@/components/magicui/interactive-grid";
+
+// --- ANIMACIONET E KARTAVE ---
+const gavelVariants: Variants = {
+  initial: { rotate: 0 },
+  animate: { 
+    rotate: [-25, 15, -20, 10, 0], 
+    transition: { duration: 0.6, ease: "easeOut" } 
+  }
+};
+
+const scaleVariants: Variants = {
+  initial: { rotate: 0 },
+  animate: { 
+    rotate: [-10, 10, -10, 10, 0], 
+    transition: { duration: 1.2, ease: "easeInOut" } 
+  }
+};
 
 export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,28 +45,34 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#030303] text-white antialiased overflow-x-hidden selection:bg-[#c5a059]">
+    <main className="min-h-screen bg-[#030303] text-white antialiased selection:bg-[#c5a059] selection:text-black scroll-smooth overflow-x-hidden">
       
-      {/* NAVBAR */}
-      <nav className={`fixed top-0 left-0 w-full z-[100] px-4 md:px-8 transition-all duration-500 ${isScrolled && !isOpen ? "opacity-0 -translate-y-full" : "opacity-100 translate-y-0"}`}>
+      {/* --- NAVBAR --- */}
+      <nav className={`fixed top-0 left-0 w-full z-[100] px-4 md:px-8 transition-all duration-700 ${isScrolled && !isOpen ? "opacity-0 -translate-y-full pointer-events-none" : "opacity-100 translate-y-0"}`}>
         <div className="max-w-6xl mx-auto py-6 relative">
-          <div className="flex items-center justify-between px-6 py-5 rounded-[24px] bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 shadow-2xl">
-            <Link href="/" className="flex items-center gap-2">
-              <Scale className="w-6 h-6 text-[#c5a059]" />
-              <span className="text-xl font-black uppercase italic italic tracking-tighter">Lex <span className="text-[#c5a059]">Associates</span></span>
+          <div className="flex items-center justify-between px-6 md:px-8 py-5 rounded-[24px] bg-[#0a0a0a]/80 backdrop-blur-2xl border border-white/10 shadow-2xl relative z-[110]">
+            
+            <Link href="/" className="flex items-center gap-3 cursor-pointer group">
+              <div className="p-2.5 rounded-xl bg-[#c5a059]/10 border border-[#c5a059]/20 group-hover:bg-[#c5a059] transition-all">
+                <Scale className="w-6 h-6 text-[#c5a059] group-hover:text-black" />
+              </div>
+              <div className="flex flex-col text-left">
+                <span className="text-xl font-black tracking-tighter leading-none uppercase italic">Lex <span className="text-[#c5a059]">Associates</span></span>
+                <span className="text-[9px] tracking-[0.3em] uppercase opacity-40 font-bold mt-1 italic">Studio Elitare</span>
+              </div>
             </Link>
 
-            <div className="hidden lg:flex gap-8 text-[10px] font-bold uppercase tracking-widest text-white/50">
-              <Link href="/sherbimet" className="hover:text-[#c5a059]">Shërbimet</Link>
-              <Link href="/kontakt" className="hover:text-[#c5a059]">Kontakt</Link>
+            <div className="hidden lg:flex items-center gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-white/50">
+              <Link href="/sherbimet" className="hover:text-[#c5a059] transition-all">Shërbimet</Link>
+              <Link href="/kontakt" className="hover:text-[#c5a059] transition-all">Kontakt</Link>
             </div>
 
             <div className="flex items-center gap-4">
               <Link href="/kontakt" className="hidden md:block">
-                <button className="bg-[#c5a059] text-black px-5 py-2.5 rounded-xl font-bold text-[10px] uppercase">Konsultë</button>
+                <button className="bg-[#c5a059] text-black px-6 py-3 rounded-xl font-bold text-[11px] uppercase tracking-wider hover:bg-white transition-all shadow-lg">Konsultë</button>
               </Link>
               <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2 text-[#c5a059]">
-                {isOpen ? <X size={24} /> : <Menu size={24} />}
+                {isOpen ? <X size={32} /> : <Menu size={32} />}
               </button>
             </div>
           </div>
@@ -59,11 +80,11 @@ export default function Page() {
           {/* MOBILE MENU */}
           <AnimatePresence>
             {isOpen && (
-              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="absolute top-[110%] left-0 right-0 bg-[#0a0a0a] border border-white/10 rounded-[30px] p-8 lg:hidden z-[150] shadow-2xl mx-2">
+              <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="absolute top-[120%] left-0 right-0 bg-[#0a0a0a]/95 border border-white/10 rounded-[32px] p-8 lg:hidden z-[100] backdrop-blur-xl mx-2 shadow-2xl">
                 <div className="flex flex-col gap-6 text-center">
-                  <Link href="/sherbimet" onClick={() => setIsOpen(false)} className="text-2xl font-black uppercase">Shërbimet</Link>
-                  <Link href="/kontakt" onClick={() => setIsOpen(false)} className="text-2xl font-black uppercase">Kontakt</Link>
-                  <Link href="/kontakt" onClick={() => setIsOpen(false)} className="w-full bg-[#c5a059] text-black py-4 rounded-xl font-bold uppercase text-xs">Rezervo Konsultë</Link>
+                  <Link href="/sherbimet" onClick={() => setIsOpen(false)} className="text-3xl font-black uppercase tracking-tighter flex items-center justify-center gap-3">Shërbimet <ArrowRight size={20} className="text-[#c5a059]" /></Link>
+                  <Link href="/kontakt" onClick={() => setIsOpen(false)} className="text-3xl font-black uppercase tracking-tighter flex items-center justify-center gap-3">Kontakt <ArrowRight size={20} className="text-[#c5a059]" /></Link>
+                  <Link href="/kontakt" onClick={() => setIsOpen(false)} className="w-full bg-[#c5a059] text-black py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px]">Rezervo Konsultë</Link>
                 </div>
               </motion.div>
             )}
@@ -71,45 +92,73 @@ export default function Page() {
         </div>
       </nav>
 
-      {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20">
+      {/* --- HERO SECTION ME FOTO --- */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#030303] z-10" />
+          <img 
+            src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop" 
+            className="w-full h-full object-cover opacity-20 grayscale scale-105" 
+            alt="Background"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030303]/80 to-[#030303]" />
           <InteractiveGridPattern className="opacity-10" />
         </div>
-        <div className="relative z-20 px-6 max-w-6xl mx-auto w-full text-left">
-          <h1 className="text-6xl md:text-[100px] font-black uppercase leading-[0.85] italic mb-10">Drejtësi që <br/><span className="text-[#c5a059]">ju takon.</span></h1>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link href="/kontakt"><ShinyButton className="px-10 py-5 bg-[#c5a059] text-black font-black rounded-xl">Rezervo Konsultë</ShinyButton></Link>
-            <Link href="/sherbimet"><button className="px-10 py-5 border border-white/10 rounded-xl text-[10px] font-bold uppercase tracking-widest">Eksploro</button></Link>
-          </div>
+
+        <div className="relative z-10 px-6 max-w-6xl mx-auto w-full text-left">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+            <h1 className="text-6xl md:text-[120px] font-black tracking-tighter leading-[0.85] uppercase mb-10 italic">Drejtësi që <br /> <span className="text-[#c5a059]">ju takon.</span></h1>
+            <div className="flex flex-col sm:flex-row gap-6">
+              <Link href="/kontakt">
+                <ShinyButton className="px-12 py-6 bg-[#c5a059] text-black text-lg font-black rounded-2xl shadow-[0_20px_50px_rgba(197,160,89,0.3)]">Rezervo Konsultë</ShinyButton>
+              </Link>
+              <Link href="/sherbimet">
+                <button className="px-12 py-6 border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-white/5 backdrop-blur-md transition-all">Eksploro Shërbimet</button>
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="py-20 px-6 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[40px] text-left">
-          <Scale className="w-10 h-10 text-[#c5a059] mb-6" />
-          <h3 className="text-xl font-bold mb-4 uppercase italic">Tregtare</h3>
-          <p className="text-white/40 text-sm mb-6 uppercase tracking-tighter leading-tight">Mbrojtje për biznesin tuaj në çdo hap.</p>
-          <Link href="/sherbimet" className="text-[#c5a059] text-[10px] font-bold uppercase">Më shumë</Link>
-        </div>
-        <div className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[40px] text-left">
-          <Gavel className="w-10 h-10 text-[#c5a059] mb-6" />
-          <h3 className="text-xl font-bold mb-4 uppercase italic">Penale</h3>
-          <p className="text-white/40 text-sm mb-6 uppercase tracking-tighter leading-tight">Përfaqësim profesional dhe mbrojtje rigoroze.</p>
-          <Link href="/sherbimet" className="text-[#c5a059] text-[10px] font-bold uppercase">Më shumë</Link>
-        </div>
-        <div className="bg-[#c5a059] p-10 rounded-[40px] text-black text-left shadow-2xl shadow-[#c5a059]/10">
-          <ShieldCheck className="w-10 h-10 text-black mb-6" />
-          <h3 className="text-xl font-bold mb-4 uppercase italic">Siguri</h3>
-          <p className="text-black/70 text-sm mb-6 uppercase tracking-tighter leading-tight font-bold">Zgjidhje ligjore të sigurta për ju.</p>
-          <Link href="/kontakt" className="text-black text-[10px] font-extrabold uppercase">Na Kontaktoni</Link>
+      {/* --- SERVICES ME EFEKTE INTERAKTIVE --- */}
+      <section className="py-24 px-6 relative bg-[#030303]">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          {/* E Drejta Tregtare */}
+          <motion.div whileHover="animate" className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all text-left group">
+            <motion.div variants={scaleVariants} className="mb-8 w-fit p-4 rounded-2xl bg-[#c5a059]/5 border border-[#c5a059]/10">
+              <Scale className="w-10 h-10 text-[#c5a059]" />
+            </motion.div>
+            <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter italic">E Drejta Tregtare</h3>
+            <p className="text-white/40 leading-relaxed mb-8">Konsulencë strategjike për biznesin tuaj dhe mbrojtje të interesave tregtare.</p>
+            <Link href="/sherbimet" className="flex items-center gap-2 text-[#c5a059] text-[10px] font-black uppercase tracking-[0.2em] group-hover:gap-4 transition-all">Më shumë <ChevronRight size={14} /></Link>
+          </motion.div>
+
+          {/* Mbrojtje Penale */}
+          <motion.div whileHover="animate" className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all relative overflow-hidden text-left group">
+            <div className="absolute top-[-20px] right-[-20px] p-8 opacity-[0.03] rotate-12 scale-150"><Gavel size={200} /></div>
+            <motion.div variants={gavelVariants} className="mb-8 w-fit p-4 rounded-2xl bg-[#c5a059]/5 border border-[#c5a059]/10">
+              <Gavel className="w-10 h-10 text-[#c5a059]" />
+            </motion.div>
+            <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter italic">Mbrojtje Penale</h3>
+            <p className="text-white/40 leading-relaxed mb-8">Përfaqësim ligjor i specializuar në çështjet penale me profesionalizëm maksimal.</p>
+            <Link href="/sherbimet" className="flex items-center gap-2 text-[#c5a059] text-[10px] font-black uppercase tracking-[0.2em] group-hover:gap-4 transition-all">Më shumë <ChevronRight size={14} /></Link>
+          </motion.div>
+
+          {/* Siguri Ligjore */}
+          <motion.div whileHover={{ y: -10 }} className="bg-[#c5a059] p-10 rounded-[48px] text-black transition-all text-left shadow-2xl">
+            <div className="mb-8 p-4 rounded-2xl bg-black/10 w-fit">
+              <ShieldCheck className="w-10 h-10 text-black" />
+            </div>
+            <h3 className="text-2xl font-bold mb-4 uppercase tracking-tighter italic">Siguri Ligjore</h3>
+            <p className="text-black/70 leading-relaxed mb-8 font-medium">Ne sigurohemi që çdo veprim i juaj të jetë në përputhje të plotë me ligjin.</p>
+            <Link href="/kontakt" className="flex items-center gap-2 text-black text-[10px] font-black uppercase tracking-[0.2em]">Na Kontaktoni <ChevronRight size={14} /></Link>
+          </motion.div>
+
         </div>
       </section>
 
-      <footer className="py-12 border-t border-white/5 text-center opacity-20 text-[10px] uppercase tracking-[0.5em] font-bold">
-        Lex Associates • 2026
+      <footer className="py-20 border-t border-white/5 text-center opacity-20 text-[10px] uppercase tracking-[0.5em] font-bold">
+        Lex Associates • 2026 • Studio Juridike Elitare
       </footer>
     </main>
   );
