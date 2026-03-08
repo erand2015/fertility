@@ -29,9 +29,10 @@ const iconAnimation: Variants = {
   animate: { scale: 1.1, rotate: [0, -5, 5, 0], transition: { duration: 0.5 } }
 };
 
-const menuVariants: Variants = {
-  closed: { opacity: 0, y: "-100%", transition: { duration: 0.5, ease: "easeInOut" } },
-  open: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeInOut" } }
+// Animacioni i Dropdown-it (jo full screen)
+const dropdownVariants: Variants = {
+  closed: { opacity: 0, y: -20, transition: { duration: 0.2 } },
+  open: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } }
 };
 
 export default function Page() {
@@ -46,7 +47,7 @@ export default function Page() {
     window.scrollTo(0, 0);
   }, []);
 
-  // --- SCROLL LOGIC PER NAVBAR ---
+  // --- SCROLL LOGIC ---
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
@@ -86,51 +87,43 @@ export default function Page() {
               <Link href="/kontakt" className="hidden md:block">
                 <button className="bg-[#c5a059] text-black px-6 py-3 rounded-xl font-bold text-[11px] uppercase tracking-wider hover:bg-white transition-all shadow-lg">Konsultë</button>
               </Link>
-              {/* MOBILE HAMBURGER BUTTON */}
-              <button 
-                onClick={() => setIsOpen(!isOpen)} 
-                className="lg:hidden p-2 text-[#c5a059] relative z-[120]"
-              >
+              
+              {/* MOBILE BUTTON */}
+              <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden p-2 text-[#c5a059]">
                 {isOpen ? <X size={32} /> : <Menu size={32} />}
               </button>
             </div>
           </div>
+
+          {/* --- MOBILE DROPDOWN (POSHTE NAVBAR-IT) --- */}
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div 
+                variants={dropdownVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                className="absolute top-full left-0 w-full mt-4 px-2 lg:hidden z-[105]"
+              >
+                <div className="bg-[#0a0a0a]/95 backdrop-blur-3xl border border-white/10 rounded-[32px] p-8 shadow-3xl flex flex-col gap-6">
+                  <Link href="/sherbimet" onClick={() => setIsOpen(false)} className="text-2xl font-black uppercase italic tracking-tighter flex items-center justify-between group">
+                    Shërbimet <ChevronRight size={20} className="text-[#c5a059]" />
+                  </Link>
+                  <Link href="/kontakt" onClick={() => setIsOpen(false)} className="text-2xl font-black uppercase italic tracking-tighter flex items-center justify-between group">
+                    Kontakt <ChevronRight size={20} className="text-[#c5a059]" />
+                  </Link>
+                  <div className="h-[1px] bg-white/5 w-full my-2" />
+                  <Link href="/kontakt" onClick={() => setIsOpen(false)}>
+                    <button className="w-full bg-[#c5a059] text-black py-5 rounded-2xl font-black uppercase text-xs tracking-widest shadow-xl">
+                      Rezervo Konsultë
+                    </button>
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
-
-      {/* --- MOBILE MENU OVERLAY --- */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            variants={menuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="fixed inset-0 bg-[#030303] z-[105] flex flex-col items-center justify-center gap-8 lg:hidden px-6"
-          >
-            <Link 
-              href="/sherbimet" 
-              onClick={() => setIsOpen(false)}
-              className="text-4xl font-black uppercase italic tracking-tighter hover:text-[#c5a059] transition-all"
-            >
-              Shërbimet
-            </Link>
-            <Link 
-              href="/kontakt" 
-              onClick={() => setIsOpen(false)}
-              className="text-4xl font-black uppercase italic tracking-tighter hover:text-[#c5a059] transition-all"
-            >
-              Kontakt
-            </Link>
-            <div className="w-full max-w-xs h-[1px] bg-white/10 my-4" />
-            <Link href="/kontakt" onClick={() => setIsOpen(false)}>
-              <button className="bg-[#c5a059] text-black w-full py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl">
-                Rezervo Konsultë
-              </button>
-            </Link>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* --- HERO --- */}
       <section className="relative min-h-[85vh] flex items-center justify-center pt-24 overflow-hidden">
@@ -139,7 +132,7 @@ export default function Page() {
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030303]/80 to-[#030303]" />
           <InteractiveGridPattern className="opacity-10" />
         </div>
-        <div className="relative z-10 px-6 max-w-6xl mx-auto w-full">
+        <div className="relative z-10 px-6 max-w-6xl mx-auto w-full text-left">
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-6xl md:text-[110px] font-black tracking-tighter leading-[0.85] uppercase mb-10 italic">
             Drejtësi që <br /> <span className="text-[#c5a059]">ju takon.</span>
           </motion.h1>
@@ -160,7 +153,6 @@ export default function Page() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
             {/* 1. Tregtare */}
             <motion.div whileHover="animate" variants={cardHover} className="bg-[#0a0a0a] border border-white/5 p-10 rounded-[48px] hover:border-[#c5a059]/30 transition-all group relative overflow-hidden flex flex-col justify-between min-h-[380px]">
               <div>
@@ -243,18 +235,11 @@ export default function Page() {
 
       <AnimatePresence>
         {isScrolled && (
-          <motion.button 
-            initial={{ opacity: 0, scale: 0.5 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            exit={{ opacity: 0, scale: 0.5 }} 
-            onClick={scrollToTop} 
-            className="fixed bottom-8 right-8 z-[150] p-4 rounded-full bg-[#c5a059] text-black shadow-2xl hover:bg-white transition-all group"
-          >
+          <motion.button initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.5 }} onClick={scrollToTop} className="fixed bottom-8 right-8 z-[150] p-4 rounded-full bg-[#c5a059] text-black shadow-2xl hover:bg-white transition-all group">
             <ChevronUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />
           </motion.button>
         )}
       </AnimatePresence>
-
     </main>
   );
 }
