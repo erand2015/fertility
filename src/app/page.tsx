@@ -34,6 +34,16 @@ export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // --- KODI PER REFRESH NE TOP ---
+  useEffect(() => {
+    // Kjo linjë i thotë browser-it "mos e mbaj mend ku isha"
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    // Detyron scroll-in në pikën 0 (lart) menjëherë
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
@@ -144,7 +154,7 @@ export default function Page() {
               <Link href="/kontakt" className="flex items-center gap-2 text-black text-[10px] font-black uppercase tracking-[0.2em] mt-8">Na Kontaktoni <ChevronRight size={14} /></Link>
             </motion.div>
 
-            {/* 4. Familjare (GOLD - TANI SI SIGURIA LIGJORE) */}
+            {/* 4. Familjare (GOLD) */}
             <motion.div whileHover={{ y: -10 }} className="bg-[#c5a059] p-10 rounded-[48px] text-black transition-all shadow-2xl flex flex-col justify-between min-h-[380px]">
               <div>
                 <div className="mb-8 p-4 rounded-2xl bg-black/10 w-fit">
