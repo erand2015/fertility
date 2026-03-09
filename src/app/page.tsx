@@ -8,7 +8,7 @@ import { ArrowUpRight, ShieldCheck, Heart, Sparkles, Activity } from "lucide-rea
 export default function FertilityClinic() {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // 1. KJO PJESË DETYRON FAQEN TË SHKOJË NË FILLIM PAS REFRESH-IT
+  // 1. DETYRON FAQEN TË SHKOJË NË FILLIM
   useEffect(() => {
     window.scrollTo(0, 0);
     if ('scrollRestoration' in history) {
@@ -18,14 +18,13 @@ export default function FertilityClinic() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // E bëjmë fshehjen e menusë pak më vonë (pas 50px) për stabilitet
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 2. LIDHJA E SHËRBIMEVE ME FOLDERAT E TU
+  // 2. SHËRBIMET
   const services = [
     {
       title: "IVF Treatment",
@@ -64,7 +63,7 @@ export default function FertilityClinic() {
   return (
     <div className="relative min-h-screen bg-white text-slate-900 selection:bg-rose-100 selection:text-rose-900 overflow-x-hidden">
       
-      {/* 3. DYNAMIC NAVBAR - FIX PËR MAUSIN */}
+      {/* 3. NAVBAR */}
       <nav className={`fixed top-0 w-full z-[100] px-6 py-4 transition-all duration-700 ease-in-out transform ${
           isScrolled 
             ? "-translate-y-full opacity-0 pointer-events-none" 
@@ -153,9 +152,7 @@ export default function FertilityClinic() {
             <h2 className="text-5xl font-black tracking-tighter mb-4">Ekselencë në çdo hap.</h2>
             <p className="text-slate-500 text-lg italic">Zgjidhni shërbimin që përshtatet me planet tuaja.</p>
           </div>
-      <div className="text-indigo-600 mb-6 group-hover:scale-110 transition-transform duration-300">
-  {React.cloneElement(s.icon as React.ReactElement<any>, { size: 36 })}
-</div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {services.map((service, i) => (
@@ -186,7 +183,7 @@ export default function FertilityClinic() {
                   href={service.link}
                   className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-slate-900 self-start group-hover:w-full group-hover:justify-between group-hover:px-6 transition-all duration-300 overflow-hidden shadow-xl"
                 >
-                  <span className="hidden group-hover:block font-bold text-xs uppercase tracking-tighter">Detaje</span>
+                  <span className="hidden group-hover:block font-bold text-xs uppercase tracking-tighter text-slate-900">Detaje</span>
                   <ArrowUpRight size={20} />
                 </Link>
               </div>
