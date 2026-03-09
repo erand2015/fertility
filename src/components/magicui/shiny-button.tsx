@@ -1,64 +1,18 @@
-"use client";
-
-import { motion, type HTMLMotionProps, type Transition } from "framer-motion";
+﻿"use client";
+import { motion, type AnimationProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-interface ShinyButtonProps extends HTMLMotionProps<"button"> {
-  children: React.ReactNode;
-  className?: string;
-}
-
-// Duke shtuar "as const" në fund, TypeScript e kupton që këto janë vlera fikse
 const animationProps = {
-  initial: { "--x": "100%", scale: 0.95 },
+  initial: { "--x": "100%", scale: 0.8 },
   animate: { "--x": "-100%", scale: 1 },
   whileTap: { scale: 0.95 },
-  transition: {
-    repeat: Infinity,
-    repeatType: "loop",
-    repeatDelay: 1,
-    type: "spring",
-    stiffness: 20,
-    damping: 15,
-    mass: 2,
-    scale: {
-      type: "spring",
-      stiffness: 200,
-      damping: 5,
-      mass: 0.5,
-    },
-  } as Transition, // Kjo e detyron TypeScript ta shohë si tranzicion valid
-};
+  transition: { repeat: Infinity, repeatType: "loop", repeatDelay: 1, type: "spring", stiffness: 20, damping: 15, mass: 2, scale: { type: "spring", stiffness: 200, damping: 5, mass: 0.5 } },
+} as AnimationProps;
 
-const ShinyButton = ({ children, className, ...props }: ShinyButtonProps) => {
+export default function ShinyButton({ text, className }: { text: string; className?: string }) {
   return (
-    <motion.button
-      {...animationProps}
-      {...(props as any)} // Përdorim 'any' këtu për të shmangur konfliktet e 'Omit' me Framer Motion
-      className={cn(
-        "relative rounded-full px-6 py-2 font-medium backdrop-blur-xl transition-shadow duration-300 ease-in-out hover:shadow dark:bg-[rgba(255,255,255,0.1)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]",
-        "bg-[#0071e3] text-white", 
-        className,
-      )}
-    >
-      <span
-        className="relative block size-full text-sm uppercase tracking-wide"
-        style={{
-          maskImage:
-            "linear-gradient(-75deg,white calc(var(--x) + 20%),transparent calc(var(--x) + 30%),white calc(var(--x) + 100%))",
-        }}
-      >
-        {children}
-      </span>
-      <span
-        style={{
-          mask: "linear-gradient(rgb(0,0,0), rgb(0,0,0)) content-box,linear-gradient(rgb(0,0,0), rgb(0,0,0))",
-          maskComposite: "exclude",
-        }}
-        className="absolute inset-0 z-10 block rounded-[inherit] bg-[linear-gradient(-75deg,rgba(255,255,255,0.1)_calc(var(--x)+20%),rgba(255,255,255,0.5)_calc(var(--x)+25%),rgba(255,255,255,0.1)_calc(var(--x)+100%))] p-px"
-      ></span>
+    <motion.button {...animationProps} className={cn("relative rounded-full px-6 py-2 font-medium backdrop-blur-xl transition-shadow duration-300 ease-in-out hover:shadow dark:bg-[radial-gradient(circle_at_50%_0%,rgba(163,177,138,0.1)_0%,transparent_60%)] dark:hover:shadow-[0_0_20px_rgba(163,177,138,0.2)]", className)}>
+      <span className="relative block h-full w-full text-sm uppercase tracking-wide text-[#2D3436]" style={{ maskImage: "linear-gradient(-75deg,#A3B18A calc(var(--x) + 20%),transparent calc(var(--x) + 30%),#A3B18A calc(var(--x) + 100%))" }}>{text}</span>
     </motion.button>
   );
-};
-
-export default ShinyButton;
+}
