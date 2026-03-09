@@ -1,12 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  output: 'export', // Kjo krijon folderin 'out'
   images: {
-    unoptimized: true,
+    unoptimized: true, // Duhet për fotot e Unsplash
   },
-  // Mund ta mbash reactCompiler nëse versioni i Next.js e mbështet, 
-  // por për siguri në deploy e lëmë kështu:
   reactCompiler: true,
 };
 
