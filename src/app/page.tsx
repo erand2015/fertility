@@ -1,276 +1,234 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link"; 
+import { ArrowUpRight, ShieldCheck, Heart, Sparkles, Activity } from "lucide-react";
 
 export default function FertilityClinic() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // E bëjmë fshehjen e menusë pak më vonë (pas 50px) për stabilitet
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // 1. LIDHJA E SHËRBIMEVE ME FOLDERAT E TU
+  const services = [
+    {
+      title: "IVF Treatment",
+      link: "/ivf", // Lidhja me folderin /ivf
+      img: "https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2000",
+      desc: "Teknologjia ICSI dhe monitorim me AI për sukses maksimal.",
+      size: "md:col-span-2",
+      color: "from-blue-500/20"
+    },
+    {
+      title: "Egg Freezing",
+      link: "/egg-freezing", // Lidhja me folderin /egg-freezing
+      img: "https://images.unsplash.com/photo-1600959907703-125ba1374a12?q=80&w=2000",
+      desc: "Ngrirja me vitrifikim për siguri afatgjatë.",
+      size: "md:col-span-1",
+      color: "from-rose-500/20"
+    },
+    {
+      title: "Genetic Testing",
+      link: "/ivf", // Mund ta lidhesh me një faqe specifike ose sërish me IVF
+      img: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?q=80&w=2000",
+      desc: "PGT-A për embrione të shëndetshme.",
+      size: "md:col-span-1",
+      color: "from-purple-500/20"
+    },
+    {
+      title: "Consultation",
+      link: "/contact", // Lidhja me folderin /contact
+      img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2000",
+      desc: "Bisedoni me ekspertët tanë sot.",
+      size: "md:col-span-2",
+      color: "from-amber-500/20"
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-[#FFF8F6] text-gray-800">
+    <div className="relative min-h-screen bg-white text-slate-900 selection:bg-rose-100 selection:text-rose-900 overflow-x-hidden">
+      
+      {/* 2. DYNAMIC NAVBAR - FIX PËR MAUSIN */}
+      <nav className={`fixed top-0 w-full z-[100] px-6 py-4 transition-all duration-700 ease-in-out transform ${
+          isScrolled 
+            ? "-translate-y-full opacity-0 pointer-events-none" // pointer-events-none bën që të mos bllokojë mausin kur fshihet
+            : "translate-y-0 opacity-100 pointer-events-auto"
+        }`}>
+        <div className="max-w-7xl mx-auto flex justify-between items-center p-4 bg-white/40 backdrop-blur-xl border border-white/20 shadow-sm rounded-[2rem]">
+          <Link href="/" className="flex items-center gap-2 text-2xl font-black tracking-tighter text-slate-900 pointer-events-auto">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white italic bg-rose-500 shadow-lg shadow-rose-200">
+              L
+            </div>
+            <span>
+              LUMINA <span className="text-rose-500 font-serif italic font-light">Fertility</span>
+            </span>
+          </Link>
 
-      {/* NAVBAR */}
+          <div className="hidden md:flex space-x-8 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 pointer-events-auto">
+            <a href="#services" className="hover:text-rose-500 transition-colors">Shërbimet</a>
+            <Link href="/journey" className="hover:text-rose-500 transition-colors">Rrugëtimi</Link>
+            <Link href="/contact" className="hover:text-rose-500 transition-colors">Kontakt</Link>
+          </div>
 
-      <nav className="fixed w-full z-50 flex justify-between items-center p-6 bg-white/70 backdrop-blur-xl border-b border-rose-100">
-
-        <div className="text-2xl font-black text-rose-500">
-          LUMINA <span className="text-purple-400 italic font-light">Fertility</span>
+          <Link href="/contact" className="pointer-events-auto">
+            <button className="bg-slate-950 text-white px-6 py-2.5 rounded-full text-xs font-bold hover:bg-rose-600 transition-all shadow-lg shadow-rose-200/50">
+              Rezervo Tani
+            </button>
+          </Link>
         </div>
-
-        <div className="hidden md:flex space-x-10 text-xs uppercase tracking-[0.3em] text-gray-500">
-          <a href="#services">Shërbimet</a>
-          <a href="#doctors">Doktorët</a>
-          <a href="#about">Rreth</a>
-        </div>
-
-        <button className="bg-gradient-to-r from-rose-400 to-purple-400 text-white px-6 py-3 rounded-full text-xs font-bold shadow-lg">
-          Rezervo
-        </button>
-
       </nav>
 
-      {/* HERO */}
-
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-
-        <div className="absolute inset-0 bg-gradient-to-br from-rose-100 via-purple-100 to-amber-100"></div>
-
-        <div
-          className="absolute inset-0 opacity-20 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1580281657527-47dcb1c5c4c6?q=80&w=2000')",
-          }}
-        />
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center z-10 max-w-4xl px-6"
-        >
-
-          <h1 className="text-6xl md:text-8xl font-black leading-[0.9]">
-            Jeta fillon
-            <br />
-            <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-amber-400 bg-clip-text text-transparent italic">
-              këtu
-            </span>
-          </h1>
-
-          <p className="mt-8 text-lg text-gray-600 max-w-xl mx-auto">
-            Klinika jonë e fertilitetit kombinon teknologjinë moderne me
-            kujdes të personalizuar për të realizuar ëndrrën tuaj për familje.
-          </p>
-
-          <button className="mt-10 px-10 py-5 bg-gradient-to-r from-rose-400 to-purple-400 text-white rounded-2xl font-bold shadow-lg">
-            Rezervo Konsultë
-          </button>
-
-        </motion.div>
-
-      </section>
-
-      {/* SUCCESS STATS */}
-
-      <section className="py-20 bg-white">
-
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-center">
-
-          <div>
-            <h3 className="text-5xl font-black text-rose-500">98%</h3>
-            <p className="mt-2 text-gray-500">IVF Success Rate</p>
-          </div>
-
-          <div>
-            <h3 className="text-5xl font-black text-purple-500">12,000+</h3>
-            <p className="mt-2 text-gray-500">Families Created</p>
-          </div>
-
-          <div>
-            <h3 className="text-5xl font-black text-amber-500">25+</h3>
-            <p className="mt-2 text-gray-500">Years Experience</p>
-          </div>
-
+      {/* 3. HERO SECTION */}
+      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-white">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1551076805-e1869033e561?q=80&w=2500" 
+            alt="Clinic Background"
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white" />
         </div>
 
+        <div className="relative z-10 text-center max-w-5xl px-6 mt-12">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-rose-100 shadow-sm text-rose-600 text-[10px] font-bold tracking-widest uppercase mb-8"
+          >
+            <Sparkles size={14} /> E ardhmja e familjes suaj
+          </motion.div>
+
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-7xl md:text-[110px] font-black leading-[0.85] tracking-tight text-slate-950 mb-10"
+          >
+            Jeta fillon <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-purple-500 to-rose-400 italic font-serif font-medium leading-normal">
+              këtu.
+            </span>
+          </motion.h1>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-12 flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Link href="/journey">
+              <button className="px-10 py-5 bg-slate-950 text-white rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-rose-300 transition-all hover:-translate-y-1 w-full sm:w-auto">
+                Fillo rrugëtimin tend
+              </button>
+            </Link>
+
+            <Link href="/contact">
+                <button className="px-10 py-5 bg-white border border-slate-200 text-slate-900 rounded-2xl font-bold text-lg hover:bg-slate-50 transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                <Activity size={20} className="text-rose-500" /> Konsultë Falas
+                </button>
+            </Link>
+          </motion.div>
+        </div>
       </section>
 
-      {/* SERVICES */}
+      {/* 4. BENTO SERVICES GRID - ME FIX PËR BORDERIN */}
+      <section id="services" className="relative z-20 py-32 px-6 max-w-7xl mx-auto bg-white">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="max-w-xl text-left">
+            <h2 className="text-5xl font-black tracking-tighter mb-4">Ekselencë në çdo hap.</h2>
+            <p className="text-slate-500 text-lg italic">Zgjidhni shërbimin që përshtatet me planet tuaja.</p>
+          </div>
+        </div>
 
-      <section id="services" className="py-32 px-6 bg-gradient-to-b from-white to-rose-50">
-
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
-
-          {[
-            {
-              title: "IVF Treatment",
-              img: "https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2000",
-              desc: "Trajtimi më i avancuar për fertilitet.",
-            },
-            {
-              title: "Egg Freezing",
-              img: "https://images.unsplash.com/photo-1600959907703-125ba1374a12?q=80&w=2000",
-              desc: "Ruani fertilitetin për të ardhmen.",
-            },
-            {
-              title: "Genetic Testing",
-              img: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?q=80&w=2000",
-              desc: "Analiza gjenetike për embrione të shëndetshme.",
-            },
-          ].map((service, i) => (
-            <div key={i} className="group relative rounded-[30px] overflow-hidden shadow-xl">
-
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {services.map((service, i) => (
+            <motion.div 
+              key={i} 
+              whileHover={{ y: -15 }}
+              className={`
+                ${service.size} group relative rounded-[2.5rem] overflow-hidden bg-slate-100 min-h-[400px] 
+                border-2 border-transparent 
+                hover:border-rose-500 
+                hover:shadow-[0_0_40px_rgba(244,63,94,0.2)]
+                transition-all duration-500 ease-out shadow-sm
+              `}
+            >
               <img
                 src={service.img}
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                alt={service.title}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 brightness-90 group-hover:brightness-75"
               />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-
-              <div className="relative p-10 text-white h-[420px] flex flex-col justify-end">
-
-                <h3 className="text-2xl font-bold mb-3">
-                  {service.title}
-                </h3>
-
-                <p className="text-sm opacity-90">
+              <div className={`absolute inset-0 bg-gradient-to-t ${service.color} via-transparent to-transparent opacity-60`}></div>
+              
+              <div className="relative p-10 h-full flex flex-col justify-end text-white z-10">
+                <h3 className="text-3xl font-bold mb-2 tracking-tight">{service.title}</h3>
+                <p className="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 max-w-xs text-slate-100 mb-6">
                   {service.desc}
                 </p>
-
+                <Link
+                  href={service.link}
+                  className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-slate-900 self-start group-hover:w-full group-hover:justify-between group-hover:px-6 transition-all duration-300 overflow-hidden shadow-xl"
+                >
+                  <span className="hidden group-hover:block font-bold text-xs uppercase tracking-tighter">Detaje</span>
+                  <ArrowUpRight size={20} />
+                </Link>
               </div>
-
-            </div>
+            </motion.div>
           ))}
-
         </div>
-
       </section>
 
-      {/* DOCTORS */}
-
-      <section id="doctors" className="py-32 bg-white">
-
-        <div className="max-w-6xl mx-auto text-center mb-20">
-          <h2 className="text-5xl font-black">Ekspertët Tanë</h2>
-        </div>
-
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 px-6">
-
-          {[
-            {
-              name: "Dr. Maria Rossi",
-              role: "IVF Specialist",
-              img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2",
-            },
-            {
-              name: "Dr. John Smith",
-              role: "Embryologist",
-              img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d",
-            },
-            {
-              name: "Dr. Elena Petrova",
-              role: "Fertility Consultant",
-              img: "https://images.unsplash.com/photo-1594824476967-48c8b964273f",
-            },
-          ].map((doc, i) => (
-
-            <div key={i} className="text-center">
-
-              <img
-                src={doc.img}
-                className="w-60 h-60 object-cover rounded-full mx-auto shadow-lg"
-              />
-
-              <h3 className="mt-6 text-xl font-bold">
-                {doc.name}
-              </h3>
-
-              <p className="text-gray-500">
-                {doc.role}
-              </p>
-
+      {/* 5. STATS SECTION (Dark Mode) */}
+      <section className="relative z-10 py-32 bg-slate-950 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+          <div className="text-white space-y-12 text-left">
+            <h2 className="text-5xl font-black leading-tight tracking-tighter">Pse Lumina <br /> është ndryshe?</h2>
+            
+            <div className="space-y-8">
+              <div className="flex gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-rose-500/20 flex items-center justify-center text-rose-500 shrink-0 border border-rose-500/20">
+                  <ShieldCheck size={28} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-xl mb-2">Siguri Gjenetike 100%</h4>
+                  <p className="text-slate-400 text-sm leading-relaxed">Çdo embrion testohet me teknologjinë më të fundit NGS për të garantuar shëndet maksimal.</p>
+                </div>
+              </div>
             </div>
-
-          ))}
-
-        </div>
-
-      </section>
-
-      {/* TESTIMONIALS */}
-
-      <section className="py-32 bg-gradient-to-br from-rose-50 to-purple-50">
-
-        <div className="max-w-4xl mx-auto text-center px-6">
-
-          <h2 className="text-5xl font-black mb-10">
-            Historitë e Pacientëve
-          </h2>
-
-          <p className="text-lg text-gray-600 italic">
-            “Pas 3 vitesh përpjekje, falë Lumina Fertility u bëmë prindër.
-            Faleminderit për kujdesin dhe profesionalizmin.”
-          </p>
-
-          <p className="mt-6 font-bold">
-            — Sarah & Michael
-          </p>
-
-        </div>
-
-      </section>
-
-      {/* ABOUT */}
-
-      <section id="about" className="py-32 bg-white">
-
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center px-6">
-
-          <div>
-
-            <h2 className="text-5xl font-black mb-10">
-              Pse të zgjidhni klinikën tonë?
-            </h2>
-
-            <p className="text-gray-600 leading-relaxed">
-              Lumina Fertility është një nga klinikat më të avancuara të fertilitetit
-              në Evropë, me laborator modern dhe ekip mjekësor me përvojë
-              ndërkombëtare.
-            </p>
-
           </div>
 
-          <img
-            src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2000"
-            className="rounded-[40px] shadow-2xl"
-          />
-
+          <div className="relative">
+            <div className="absolute -inset-10 bg-rose-500/20 blur-[100px] rounded-full" />
+            <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-12 text-center text-white overflow-hidden shadow-2xl">
+              <div className="text-[120px] font-black leading-none text-rose-500 mb-4 tracking-tighter">25+</div>
+              <p className="text-2xl font-bold italic font-serif">Vite duke krijuar mrekulli.</p>
+            </div>
+          </div>
         </div>
-
       </section>
 
-      {/* CTA */}
-
-      <section className="py-24 text-center bg-gradient-to-r from-rose-400 to-purple-400 text-white">
-
-        <h2 className="text-4xl font-black mb-6">
-          Filloni udhëtimin tuaj drejt prindërimit
-        </h2>
-
-        <button className="bg-white text-rose-500 px-10 py-5 rounded-2xl font-bold">
-          Rezervo Konsultë
-        </button>
-
-      </section>
-
-      {/* FOOTER */}
-
-      <footer className="py-20 text-center bg-white border-t border-gray-200">
-
-        <p className="text-gray-400 text-sm">
-          © 2026 Lumina Fertility Clinic
-        </p>
-
+      {/* 6. FOOTER */}
+      <footer className="relative z-10 py-16 bg-white text-center border-t border-slate-100 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="text-2xl font-black tracking-tighter text-slate-900">
+            LUMINA <span className="text-rose-500 italic">Fertility</span>
+          </div>
+          <p className="text-slate-400 text-xs tracking-[0.2em] uppercase font-bold">
+            © 2026 Lumina Clinic. Crafted for miracles.
+          </p>
+          <div className="flex gap-8 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+             <Link href="/contact" className="hover:text-rose-500 transition-colors">Kontakti</Link>
+             <Link href="/journey" className="hover:text-rose-500 transition-colors">Rrugëtimi</Link>
+          </div>
+        </div>
       </footer>
-
     </div>
   );
 }
