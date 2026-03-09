@@ -8,6 +8,14 @@ import { ArrowUpRight, ShieldCheck, Heart, Sparkles, Activity } from "lucide-rea
 export default function FertilityClinic() {
   const [isScrolled, setIsScrolled] = useState(false);
 
+  // 1. KJO PJESË DETYRON FAQEN TË SHKOJË NË FILLIM PAS REFRESH-IT
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       // E bëjmë fshehjen e menusë pak më vonë (pas 50px) për stabilitet
@@ -17,11 +25,11 @@ export default function FertilityClinic() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 1. LIDHJA E SHËRBIMEVE ME FOLDERAT E TU
+  // 2. LIDHJA E SHËRBIMEVE ME FOLDERAT E TU
   const services = [
     {
       title: "IVF Treatment",
-      link: "/ivf", // Lidhja me folderin /ivf
+      link: "/ivf", 
       img: "https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=2000",
       desc: "Teknologjia ICSI dhe monitorim me AI për sukses maksimal.",
       size: "md:col-span-2",
@@ -29,7 +37,7 @@ export default function FertilityClinic() {
     },
     {
       title: "Egg Freezing",
-      link: "/egg-freezing", // Lidhja me folderin /egg-freezing
+      link: "/egg-freezing", 
       img: "https://images.unsplash.com/photo-1600959907703-125ba1374a12?q=80&w=2000",
       desc: "Ngrirja me vitrifikim për siguri afatgjatë.",
       size: "md:col-span-1",
@@ -37,7 +45,7 @@ export default function FertilityClinic() {
     },
     {
       title: "Genetic Testing",
-      link: "/ivf", // Mund ta lidhesh me një faqe specifike ose sërish me IVF
+      link: "/ivf", 
       img: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?q=80&w=2000",
       desc: "PGT-A për embrione të shëndetshme.",
       size: "md:col-span-1",
@@ -45,7 +53,7 @@ export default function FertilityClinic() {
     },
     {
       title: "Consultation",
-      link: "/contact", // Lidhja me folderin /contact
+      link: "/contact", 
       img: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=2000",
       desc: "Bisedoni me ekspertët tanë sot.",
       size: "md:col-span-2",
@@ -56,10 +64,10 @@ export default function FertilityClinic() {
   return (
     <div className="relative min-h-screen bg-white text-slate-900 selection:bg-rose-100 selection:text-rose-900 overflow-x-hidden">
       
-      {/* 2. DYNAMIC NAVBAR - FIX PËR MAUSIN */}
+      {/* 3. DYNAMIC NAVBAR - FIX PËR MAUSIN */}
       <nav className={`fixed top-0 w-full z-[100] px-6 py-4 transition-all duration-700 ease-in-out transform ${
           isScrolled 
-            ? "-translate-y-full opacity-0 pointer-events-none" // pointer-events-none bën që të mos bllokojë mausin kur fshihet
+            ? "-translate-y-full opacity-0 pointer-events-none" 
             : "translate-y-0 opacity-100 pointer-events-auto"
         }`}>
         <div className="max-w-7xl mx-auto flex justify-between items-center p-4 bg-white/40 backdrop-blur-xl border border-white/20 shadow-sm rounded-[2rem]">
@@ -86,7 +94,7 @@ export default function FertilityClinic() {
         </div>
       </nav>
 
-      {/* 3. HERO SECTION */}
+      {/* 4. HERO SECTION */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-white">
         <div className="absolute inset-0 z-0">
           <img 
@@ -138,7 +146,7 @@ export default function FertilityClinic() {
         </div>
       </section>
 
-      {/* 4. BENTO SERVICES GRID - ME FIX PËR BORDERIN */}
+      {/* 5. BENTO SERVICES GRID */}
       <section id="services" className="relative z-20 py-32 px-6 max-w-7xl mx-auto bg-white">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl text-left">
@@ -185,7 +193,7 @@ export default function FertilityClinic() {
         </div>
       </section>
 
-      {/* 5. STATS SECTION (Dark Mode) */}
+      {/* 6. STATS SECTION */}
       <section className="relative z-10 py-32 bg-slate-950 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
           <div className="text-white space-y-12 text-left">
@@ -214,7 +222,7 @@ export default function FertilityClinic() {
         </div>
       </section>
 
-      {/* 6. FOOTER */}
+      {/* 7. FOOTER */}
       <footer className="relative z-10 py-16 bg-white text-center border-t border-slate-100 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-2xl font-black tracking-tighter text-slate-900">
