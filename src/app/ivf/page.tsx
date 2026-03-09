@@ -14,7 +14,7 @@ import {
   Zap
 } from "lucide-react";
 
-// --- Magic UI Background (Radial Gradient & Mesh) ---
+// --- Magic UI Background ---
 const MeshBackground = () => (
   <div className="absolute inset-0 -z-10 overflow-hidden">
     <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-50/50 rounded-full blur-[120px]" />
@@ -38,13 +38,21 @@ export default function IVFPage() {
     transition: { duration: 0.5 }
   };
 
+  // RREGULLIMI: Ikonat jepen si komponentë (pa < />)
+  const processSteps = [
+    { Icon: Stethoscope, step: "01", title: "Përgatitja", desc: "Analiza të detajuara dhe protokoll i personalizuar." },
+    { Icon: Activity, step: "02", title: "Mbledhja", desc: "Marrja e vezëve dhe laborator i teknologjisë ICSI." },
+    { Icon: Sparkles, step: "03", title: "Kultivimi", desc: "Monitorimi i embrioneve në inkubatorë AI-Ready." },
+    { Icon: Baby, step: "04", title: "Transferta", desc: "Momenti i transferimit të embrionit në mitër." },
+  ];
+
   return (
     <div className="relative min-h-screen bg-white text-slate-900 selection:bg-indigo-100 overflow-x-hidden">
       <MeshBackground />
 
-      {/* --- HERO SECTION: SCIENCE MEETS EMOTION --- */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-7xl mx-auto text-center">
+      {/* --- HERO SECTION --- */}
+      <section className="pt-32 pb-20 px-6 text-center">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -66,12 +74,8 @@ export default function IVFPage() {
             </span>
           </motion.h1>
 
-          <motion.p 
-            {...fadeInUp}
-            className="max-w-2xl mx-auto text-lg text-slate-500 mb-10 leading-relaxed"
-          >
-            Trajtimi IVF në klinikën tonë ndërthur protokollet më të avancuara 
-            botërore me një kujdes human që bën diferencën.
+          <motion.p {...fadeInUp} className="max-w-2xl mx-auto text-lg text-slate-500 mb-10 leading-relaxed">
+            Trajtimi IVF në klinikën tonë ndërthur protokollet më të avancuara botërore me një kujdes human që bën diferencën.
           </motion.p>
 
           <motion.div {...fadeInUp} className="flex flex-wrap justify-center gap-4">
@@ -85,15 +89,10 @@ export default function IVFPage() {
         </div>
       </section>
 
-      {/* --- STATS GRID (BENTO STYLE) --- */}
+      {/* --- STATS GRID --- */}
       <section className="py-20 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Card 1: Success Rate */}
-          <motion.div 
-            whileHover={{ y: -5 }}
-            className="md:col-span-2 p-10 rounded-[3rem] bg-slate-950 text-white relative overflow-hidden group"
-          >
+          <motion.div whileHover={{ y: -5 }} className="md:col-span-2 p-10 rounded-[3rem] bg-slate-950 text-white relative overflow-hidden group">
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div>
                 <BadgeInvert>Live Lab Statistics</BadgeInvert>
@@ -117,26 +116,23 @@ export default function IVFPage() {
             <Dna className="absolute top-[-20%] right-[-10%] w-80 h-80 text-white/5 rotate-45 group-hover:rotate-90 transition-transform duration-1000" />
           </motion.div>
 
-          {/* Card 2: Genetic Testing */}
-          <motion.div 
-            whileHover={{ y: -5 }}
-            className="p-10 rounded-[3rem] bg-indigo-50 border border-indigo-100 flex flex-col justify-between"
-          >
+          <motion.div whileHover={{ y: -5 }} className="p-10 rounded-[3rem] bg-indigo-50 border border-indigo-100 flex flex-col justify-between">
             <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-indigo-600 shadow-sm">
               <Beaker size={28} />
             </div>
             <div>
               <h3 className="text-2xl font-bold mb-2">PGT-A Testing</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                Testimi gjenetik i embrioneve përpara transferimit për të garantuar shëndet maksimal.
-              </p>
+              <p className="text-sm text-slate-600 leading-relaxed">Testimi gjenetik i embrioneve përpara transferimit për të garantuar shëndet maksimal.</p>
             </div>
           </motion.div>
-
         </div>
       </section>
 
       {/* --- PROCESS STEPS: THE JOURNEY --- */}
+      
+
+[Image of the IVF process steps diagram]
+
       <section className="py-24 px-6 bg-white border-y border-slate-100">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-2xl mb-20">
@@ -145,15 +141,10 @@ export default function IVFPage() {
           </div>
 
           <div className="grid md:grid-cols-4 gap-12">
-            {[
-              { icon: <Stethoscope />, step: "01", title: "Përgatitja", desc: "Analiza të detajuara dhe protokoll i personalizuar." },
-              { icon: <Activity />, step: "02", title: "Mbledhja", desc: "Marrja e vezëve dhe laborator i teknologjisë ICSI." },
-              { icon: <Sparkles />, step: "03", title: "Kultivimi", desc: "Monitorimi i embrioneve në inkubatorë AI-Ready." },
-              { icon: <Baby />, step: "04", title: "Transferta", desc: "Momenti i transferimit të embrionit në mitër." },
-            ].map((s, i) => (
+            {processSteps.map((s, i) => (
               <div key={i} className="relative group">
                 <div className="text-indigo-600 mb-6 group-hover:scale-110 transition-transform duration-300">
-                  {React.cloneElement(s.icon as React.ReactElement, { size: 36 })}
+                  <s.Icon size={36} />
                 </div>
                 <h4 className="font-black text-slate-200 text-5xl absolute -top-4 right-0 -z-10 group-hover:text-indigo-50 transition-colors">
                   {s.step}
@@ -166,16 +157,12 @@ export default function IVFPage() {
         </div>
       </section>
 
-      {/* --- WHY US (CHECKLIST) --- */}
+      {/* --- WHY US --- */}
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div className="relative">
             <div className="absolute -inset-4 bg-indigo-100 rounded-[3rem] -rotate-2 -z-10" />
-            <img 
-              src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2000" 
-              className="rounded-[2.5rem] shadow-xl"
-              alt="Medical Team"
-            />
+            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2000" className="rounded-[2.5rem] shadow-xl" alt="Medical Team" />
           </div>
           <div>
             <h2 className="text-4xl font-black mb-8">Pse të zgjidhni programin tonë IVF?</h2>
@@ -184,15 +171,9 @@ export default function IVFPage() {
                 "Embriologë me përvojë ndërkombëtare",
                 "Laborator i certifikuar ISO Class 5",
                 "Asistencë psikologjike gjatë gjithë procesit",
-                "Paketa financiare transparente, pa kosto të fshehura"
+                "Paketa financiare transparente"
               ].map((item, i) => (
-                <motion.div 
-                  initial={{ x: 20, opacity: 0 }}
-                  whileInView={{ x: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.1 }}
-                  key={i} 
-                  className="flex items-center gap-4 p-4 rounded-2xl border border-slate-50 hover:bg-slate-50 transition-colors"
-                >
+                <motion.div key={i} initial={{ x: 20, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.1 }} className="flex items-center gap-4 p-4 rounded-2xl border border-slate-50 hover:bg-slate-50 transition-colors">
                   <CheckCircle2 className="text-indigo-500" size={24} />
                   <span className="font-semibold text-slate-700">{item}</span>
                 </motion.div>
@@ -203,25 +184,19 @@ export default function IVFPage() {
       </section>
 
       {/* --- CTA SECTION --- */}
-      <footer className="py-24 px-6">
-        <div className="max-w-5xl mx-auto bg-indigo-600 rounded-[4rem] p-12 md:p-24 text-center text-white relative overflow-hidden shadow-2xl shadow-indigo-200">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
+      <section className="py-24 px-6">
+        <div className="max-w-5xl mx-auto bg-indigo-600 rounded-[4rem] p-12 md:p-24 text-center text-white relative overflow-hidden shadow-2xl">
           <h2 className="text-4xl md:text-6xl font-bold mb-8 relative z-10">Gati për të nisur <br /> këtë rrugëtim?</h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-            <button className="bg-white text-indigo-600 px-10 py-5 rounded-2xl font-bold hover:bg-indigo-50 transition-colors">
-              Rezervo Konsultën e Parë
-            </button>
-            <button className="bg-indigo-700 text-white px-10 py-5 rounded-2xl font-bold hover:bg-indigo-800 transition-colors">
-              Shkarko Broshurën
-            </button>
+            <button className="bg-white text-indigo-600 px-10 py-5 rounded-2xl font-bold hover:bg-indigo-50 transition-colors">Rezervo Konsultën e Parë</button>
+            <button className="bg-indigo-700 text-white px-10 py-5 rounded-2xl font-bold hover:bg-indigo-800 transition-colors">Shkarko Broshurën</button>
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   );
 }
 
-// Helper Components
 const BadgeInvert = ({ children }: { children: React.ReactNode }) => (
   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white text-[10px] font-bold tracking-widest uppercase">
     {children}
