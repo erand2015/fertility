@@ -153,7 +153,9 @@ export default function FertilityClinic() {
             <h2 className="text-5xl font-black tracking-tighter mb-4">Ekselencë në çdo hap.</h2>
             <p className="text-slate-500 text-lg italic">Zgjidhni shërbimin që përshtatet me planet tuaja.</p>
           </div>
-        </div>
+      <div className="text-indigo-600 mb-6 group-hover:scale-110 transition-transform duration-300">
+  {React.cloneElement(s.icon as React.ReactElement<any>, { size: 36 })}
+</div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {services.map((service, i) => (
