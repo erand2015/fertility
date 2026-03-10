@@ -16,7 +16,6 @@ import {
   ArrowUpRight
 } from "lucide-react";
 
-// --- Background konsistent me faqen kryesore ---
 const MeshBackground = () => (
   <div className="absolute inset-0 -z-10 overflow-hidden">
     <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-rose-50/50 rounded-full blur-[120px]" />
@@ -51,7 +50,7 @@ export default function IVFPage() {
     <div className="relative min-h-screen bg-white text-slate-900 selection:bg-rose-100 overflow-x-hidden">
       <MeshBackground />
 
-      {/* --- MINI NAVBAR (Për konsistencë) --- */}
+      {/* --- NAVBAR --- */}
       <nav className="fixed top-0 w-full z-[100] px-6 py-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center p-4 bg-white/40 backdrop-blur-xl border border-white/20 shadow-sm rounded-[2rem]">
           <Link href="/" className="flex items-center gap-2 text-2xl font-black tracking-tighter text-slate-900">
@@ -64,23 +63,13 @@ export default function IVFPage() {
         </div>
       </nav>
 
-      {/* --- HERO SECTION --- */}
-      <section className="pt-48 pb-20 px-6 text-center">
+      {/* --- HERO SECTION (BANNERI U HOQ) --- */}
+      <section className="pt-56 pb-20 px-6 text-center">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-50 border border-rose-100 text-rose-600 text-[11px] font-bold tracking-[0.2em] uppercase mb-8"
-          >
-            <Zap size={14} className="fill-rose-600" />
-            Teknologjia IVF e Gjeneratës së Re
-          </motion.div>
-
           <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
             className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8 text-slate-950"
           >
             Fillimi i një <br />
@@ -98,7 +87,7 @@ export default function IVFPage() {
           </motion.p>
 
           <motion.div {...fadeInUp} transition={{ delay: 0.4 }} className="flex flex-wrap justify-center gap-4">
-            <button className="h-14 px-10 rounded-2xl bg-slate-950 text-white font-bold hover:shadow-2xl hover:shadow-rose-200 transition-all flex items-center gap-2 hover:-translate-y-1">
+            <button className="h-14 px-10 rounded-2xl bg-slate-950 text-white font-bold hover:shadow-2xl hover:shadow-rose-300 transition-all flex items-center gap-2 hover:-translate-y-1">
               Filloni Trajtimin <ArrowRight size={18} />
             </button>
           </motion.div>
@@ -147,6 +136,10 @@ export default function IVFPage() {
       </section>
 
       {/* --- PROCESS STEPS --- */}
+      
+
+[Image of the IVF process steps diagram]
+
       <section className="py-24 px-6 bg-slate-50/50 border-y border-slate-100">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-2xl mb-20 text-left">
