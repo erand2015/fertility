@@ -8,7 +8,6 @@ import { ArrowUpRight, ShieldCheck, Heart, Sparkles, Activity } from "lucide-rea
 export default function FertilityClinic() {
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // 1. DETYRON FAQEN TË SHKOJË NË FILLIM
   useEffect(() => {
     window.scrollTo(0, 0);
     if ('scrollRestoration' in history) {
@@ -24,7 +23,6 @@ export default function FertilityClinic() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 2. SHËRBIMET
   const services = [
     {
       title: "IVF Treatment",
@@ -63,7 +61,7 @@ export default function FertilityClinic() {
   return (
     <div className="relative min-h-screen bg-white text-slate-900 selection:bg-rose-100 selection:text-rose-900 overflow-x-hidden">
       
-      {/* 3. NAVBAR */}
+      {/* NAVBAR */}
       <nav className={`fixed top-0 w-full z-[100] px-6 py-4 transition-all duration-700 ease-in-out transform ${
           isScrolled 
             ? "-translate-y-full opacity-0 pointer-events-none" 
@@ -93,7 +91,7 @@ export default function FertilityClinic() {
         </div>
       </nav>
 
-      {/* 4. HERO SECTION */}
+      {/* HERO SECTION - ANIMACIONET E NDRYSHUARA KETU */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-white">
         <div className="absolute inset-0 z-0">
           <img 
@@ -106,16 +104,22 @@ export default function FertilityClinic() {
 
         <div className="relative z-10 text-center max-w-5xl px-6 mt-12">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-rose-100 shadow-sm text-rose-600 text-[10px] font-bold tracking-widest uppercase mb-8"
           >
             <Sparkles size={14} /> E ardhmja e familjes suaj
           </motion.div>
 
           <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              duration: 1.5, 
+              ease: [0.22, 1, 0.36, 1],
+              delay: 0.2 
+            }}
             className="text-7xl md:text-[110px] font-black leading-[0.85] tracking-tight text-slate-950 mb-10"
           >
             Jeta fillon <br />
@@ -127,7 +131,11 @@ export default function FertilityClinic() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ 
+              duration: 1.2, 
+              ease: [0.22, 1, 0.36, 1],
+              delay: 0.6 
+            }}
             className="mt-12 flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Link href="/journey">
@@ -145,7 +153,7 @@ export default function FertilityClinic() {
         </div>
       </section>
 
-      {/* 5. BENTO SERVICES GRID */}
+      {/* BENTO SERVICES GRID */}
       <section id="services" className="relative z-20 py-32 px-6 max-w-7xl mx-auto bg-white">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div className="max-w-xl text-left">
@@ -192,7 +200,7 @@ export default function FertilityClinic() {
         </div>
       </section>
 
-      {/* 6. STATS SECTION */}
+      {/* STATS SECTION */}
       <section className="relative z-10 py-32 bg-slate-950 px-6 overflow-hidden">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
           <div className="text-white space-y-12 text-left">
@@ -221,7 +229,7 @@ export default function FertilityClinic() {
         </div>
       </section>
 
-      {/* 7. FOOTER */}
+      {/* FOOTER */}
       <footer className="relative z-10 py-16 bg-white text-center border-t border-slate-100 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-2xl font-black tracking-tighter text-slate-900">
