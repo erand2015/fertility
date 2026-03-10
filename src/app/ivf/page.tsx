@@ -12,7 +12,6 @@ import {
   ArrowRight, 
   CheckCircle2,
   Activity,
-  Zap,
   ArrowUpRight
 } from "lucide-react";
 
@@ -50,21 +49,8 @@ export default function IVFPage() {
     <div className="relative min-h-screen bg-white text-slate-900 selection:bg-rose-100 overflow-x-hidden">
       <MeshBackground />
 
-      {/* --- NAVBAR --- */}
-      <nav className="fixed top-0 w-full z-[100] px-6 py-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center p-4 bg-white/40 backdrop-blur-xl border border-white/20 shadow-sm rounded-[2rem]">
-          <Link href="/" className="flex items-center gap-2 text-2xl font-black tracking-tighter text-slate-900">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white italic bg-rose-500 shadow-lg shadow-rose-200">L</div>
-            <span>LUMINA <span className="text-rose-500 font-serif italic font-light">Fertility</span></span>
-          </Link>
-          <Link href="/contact">
-            <button className="bg-slate-950 text-white px-6 py-2.5 rounded-full text-xs font-bold hover:bg-rose-600 transition-all">Rezervo Konsultë</button>
-          </Link>
-        </div>
-      </nav>
-
-      {/* --- HERO SECTION (BANNERI U HOQ) --- */}
-      <section className="pt-56 pb-20 px-6 text-center">
+      {/* --- HERO SECTION (NAVBAR DHE BANNERI U HOQËN) --- */}
+      <section className="pt-32 pb-20 px-6 text-center">
         <div className="max-w-7xl mx-auto">
           <motion.h1 
             initial={{ opacity: 0, y: 40 }}
@@ -87,9 +73,11 @@ export default function IVFPage() {
           </motion.p>
 
           <motion.div {...fadeInUp} transition={{ delay: 0.4 }} className="flex flex-wrap justify-center gap-4">
-            <button className="h-14 px-10 rounded-2xl bg-slate-950 text-white font-bold hover:shadow-2xl hover:shadow-rose-300 transition-all flex items-center gap-2 hover:-translate-y-1">
-              Filloni Trajtimin <ArrowRight size={18} />
-            </button>
+            <Link href="/contact">
+              <button className="h-14 px-10 rounded-2xl bg-slate-950 text-white font-bold hover:shadow-2xl hover:shadow-rose-300 transition-all flex items-center gap-2 hover:-translate-y-1">
+                Filloni Trajtimin <ArrowRight size={18} />
+              </button>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -136,10 +124,6 @@ export default function IVFPage() {
       </section>
 
       {/* --- PROCESS STEPS --- */}
-      
-
-[Image of the IVF process steps diagram]
-
       <section className="py-24 px-6 bg-slate-50/50 border-y border-slate-100">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-2xl mb-20 text-left">
@@ -222,7 +206,6 @@ export default function IVFPage() {
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
       <footer className="py-12 border-t border-slate-100 text-center">
         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">
           © 2026 Lumina Clinic • Excellence in Human Reproduction
